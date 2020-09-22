@@ -10,6 +10,8 @@ class Client extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $appends = ['full_name','father_full_name','total_payments'];
+
     public function office()
     {
         return $this->belongsTo(Office::class, 'office_id');
@@ -23,5 +25,20 @@ class Client extends Model
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
+    public function getFatherFullNameAttribute()
+    {
+        return "{$this->father_first_name} {$this->father_last_name}";
+    }
+
+    public function getTotalPaymentsAttribute()
+    {
+        return '₹' . number_format($this->payments->sum('amount'),  2, '.' , ',' );
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Fees;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class FeesController extends Controller
 {
@@ -14,7 +15,9 @@ class FeesController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Fees/Index', [
+            'fees' => Fees::with(['client','collectedBy'])->paginate()
+        ]);
     }
 
     /**

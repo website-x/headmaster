@@ -12,7 +12,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
     Route::get('dashboard', Controllers\DashboardController::class)->name('dashboard');
 
     Route::resources([
-        'clients' => Controllers\FeesController::class,
+        'clients' => Controllers\ClientController::class,
         'fees' => Controllers\FeesController::class,
         'offices' => Controllers\OfficeController::class,
     ]);
