@@ -6,12 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Office extends Model
+class Fees extends Model
 {
     use HasFactory, SoftDeletes;
 
-    public function clients()
+    public function client()
     {
-        return $this->hasMany(Client::class);
+        return $this->belongsTo(Client::class);
+    }
+
+    public function collectedBy()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
