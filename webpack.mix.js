@@ -16,3 +16,11 @@ mix.js('resources/js/app.js', 'public/js')
         require('postcss-import'),
         require('tailwindcss'),
     ]);
+
+mix.webpackConfig({
+    resolve: {
+        alias: {
+            '@': path.resolve('resources/js')
+        }
+    }
+});

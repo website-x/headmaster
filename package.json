@@ -25,5 +25,9 @@
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.10"
     },
-    "dependencies": {}
+    "dependencies": {
+        "vue-country-region-select": "^2.0.14",
+        "vue-tel-input": "^4.4.0",
+        "ziggy-js": "^0.9.4"
+    }
 }
