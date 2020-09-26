@@ -1,37 +1,20 @@
 <template>
     <div>
-        <jet-form-section @submitted="updateClientForm">
+        <jet-form-section @submitted="updateOfficeForm">
             <template #title>
-                Student Information
+                Office Information
             </template>
 
             <template #description>
-                Update student / client information
+                Update office information
             </template>
 
             <template #form>
-                <div class="col-span-6 sm:col-span-4">
-                    <jet-label for="first_name" value="First name" />
-                    <jet-input id="first_name" type="text" class="mt-1 block w-full" v-model="form.first_name" autocomplete="first_name" />
-                    <jet-input-error :message="form.error('first_name')" class="mt-2" />
-                </div>
 
                 <div class="col-span-6 sm:col-span-4">
-                    <jet-label for="last_name" value="Last name" />
-                    <jet-input id="last_name" type="text" class="mt-1 block w-full" v-model="form.last_name" autocomplete="last_name" />
-                    <jet-input-error :message="form.error('last_name')" class="mt-2" />
-                </div>
-
-                <div class="col-span-6 sm:col-span-4">
-                    <jet-label for="father_first_name" value="Father's first name" />
-                    <jet-input id="father_first_name" type="text" class="mt-1 block w-full" v-model="form.father_first_name" autocomplete="father_first_name" />
-                    <jet-input-error :message="form.error('father_first_name')" class="mt-2" />
-                </div>
-
-                <div class="col-span-6 sm:col-span-4">
-                    <jet-label for="father_last_name" value="Father's last name" />
-                    <jet-input id="father_last_name" type="text" class="mt-1 block w-full" v-model="form.father_last_name" autocomplete="father_last_name" />
-                    <jet-input-error :message="form.error('father_last_name')" class="mt-2" />
+                    <jet-label for="name" value="Name" />
+                    <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.name" autocomplete="office name" />
+                    <jet-input-error :message="form.error('name')" class="mt-2" />
                 </div>
 
                 <div class="col-span-6 sm:col-span-4">
@@ -48,7 +31,7 @@
 
                 <div class="col-span-6 sm:col-span-4">
                     <jet-label for="State" value="State" />
-<!--                    <region-select v-model="form.state" className="form-input rounded-md shadow-sm mt-1 block w-full" :country="form.country" :region="form.state" />-->
+                    <region-select v-model="form.state" className="form-input rounded-md shadow-sm mt-1 block w-full" :country="form.country" :region="form.state" />
                     <jet-input-error :message="form.error('state')" class="mt-2" />
                 </div>
 
@@ -63,6 +46,13 @@
                     <vue-tel-input v-model="form.phone" />
                     <jet-input-error :message="form.error('phone')" class="mt-2" />
                 </div>
+
+                <div class="col-span-6 sm:col-span-4">
+                    <jet-label for="email" value="Email" />
+                    <jet-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" autocomplete="email" />
+                    <jet-input-error :message="form.error('email')" class="mt-2" />
+                </div>
+
             </template>
 
             <template #actions>
@@ -75,9 +65,10 @@
                     Update
                 </jet-button>
 
-                <inertia-link :href="$route('clients.index')" class="mr-3 inline-flex items-center px-4 py-2 bg-white hover:bg-gray-100 text-gray-800 border border-transparent rounded-md font-semibold text-xs uppercase tracking-widest focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out border border-gray-300 rounded">Cancel</inertia-link>
+                <inertia-link :href="$route('offices.index')" class="mr-3 inline-flex items-center px-4 py-2 bg-white hover:bg-gray-100 text-gray-800 border border-transparent rounded-md font-semibold text-xs uppercase tracking-widest focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out border border-gray-300 rounded">Cancel</inertia-link>
 
-                <button @click="confirmApiTokenDeletion"
+                <button
+                        @click="confirmApiTokenDeletion"
                         class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150 bg-red-500 self-start"
                         :disabled="form.processing"
                         type="button">
@@ -90,11 +81,11 @@
         <!-- Delete Token Confirmation Modal -->
         <jet-confirmation-modal :show="apiTokenBeingDeleted" @close="apiTokenBeingDeleted = null">
             <template #title>
-                Delete Client
+                Delete Office
             </template>
 
             <template #content>
-                Are you sure you would like to delete this client?
+                Are you sure you would like to delete this office?
             </template>
 
             <template #footer>
@@ -140,17 +131,16 @@ export default {
         return {
             form: this.$inertia.form({
                 '_method': 'PATCH',
-                first_name: this.$page.client.first_name,
-                last_name: this.$page.client.last_name,
-                father_first_name: this.$page.client.father_first_name,
-                father_last_name: this.$page.client.father_last_name,
-                address: this.$page.client.address,
-                city: this.$page.client.city,
-                state: this.$page.client.state,
-                country: this.$page.client.country,
-                phone: this.$page.client.phone
+                id: this.$page.office.id,
+                name: this.$page.office.name,
+                address: this.$page.office.address,
+                city: this.$page.office.city,
+                state: this.$page.office.state,
+                country: this.$page.office.country,
+                phone: this.$page.office.phone,
+                email: this.$page.office.email,
             }, {
-                bag: 'updateClient',
+                bag: 'updateOffice',
                 resetOnSuccess: false,
             }),
             deleteApiTokenForm: this.$inertia.form(),
@@ -159,10 +149,10 @@ export default {
     },
 
     methods: {
-        updateClientForm() {
-            this.form.post('/clients/' + this.$page.client.id, {
+        updateOfficeForm() {
+            this.form.post('/offices/' + this.$page.office.id, {
                 preserveScroll: true
-            });
+            })
         },
 
         confirmApiTokenDeletion() {
@@ -170,9 +160,9 @@ export default {
         },
 
         deleteApiToken() {
-            this.deleteApiTokenForm.delete('/clients/' + this.$page.client.id, {
+            this.$inertia.delete('/offices/' + this.$page.office.id, {
                 preserveScroll: true
-            }).then(() => window.location = this.$route('clients.index'))
+            }).then(() => window.location = this.$route('offices.index'))
         }
     }
 }

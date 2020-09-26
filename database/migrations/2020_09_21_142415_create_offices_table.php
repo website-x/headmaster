@@ -21,6 +21,7 @@ class CreateOfficesTable extends Migration
             $table->string('state')->nullable();
             $table->string('country')->nullable();
             $table->string('phone')->nullable();
+            $table->string('email')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
