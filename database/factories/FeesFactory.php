@@ -23,7 +23,7 @@ class FeesFactory extends Factory
     public function definition()
     {
         return [
-            'description' => $this->faker->paragraph,
+            'description' => $this->faker->sentence,
             'amount' => $this->faker->randomFloat(2),
             'method' => $this->faker->randomElement(['Cash','Bank Transfer'])
         ];

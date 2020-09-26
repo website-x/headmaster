@@ -86,6 +86,42 @@
             </template>
         </jet-form-section>
 
+        <jet-form-section @submitted="updateClientForm" class="mt-5">
+            <template #title>
+                Payments
+            </template>
+
+            <template #description>
+                Payments history
+            </template>
+
+            <template #form>
+                <table class="table-responsive">
+                    <thead>
+                        <tr>
+                            <th class="w-1/3 px-4 py-2">Description</th>
+                            <th class="w-2/3 px-4 py-2">Amount</th>
+                            <th class="w-3/3 px-4 py-2">When</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="payment in $page.client.payments">
+                        <td class="px-4 py-2"> {{ payment.description }}</td>
+                        <td class="px-4 py-2"> ₹{{ payment.amount }}</td>
+                        <td class="px-4 py-2"> {{ payment.last_updated_at }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </template>
+        </jet-form-section>
+
+        <inertia-link
+            :href="$route('fees.create')"
+            class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+            Add Payment
+        </inertia-link>
+
 
         <!-- Delete Token Confirmation Modal -->
         <jet-confirmation-modal :show="apiTokenBeingDeleted" @close="apiTokenBeingDeleted = null">

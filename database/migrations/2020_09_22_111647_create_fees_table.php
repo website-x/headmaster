@@ -15,7 +15,7 @@ class CreateFeesTable extends Migration
     {
         Schema::create('fees', function (Blueprint $table) {
             $table->id();
-            $table->text('description')->nullable();
+            $table->string('description')->nullable();
             $table->double('amount');
             $table->string('method')->nullable();
 

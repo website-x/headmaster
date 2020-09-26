@@ -2,87 +2,76 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\Fees;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Validator;
 
 class FeesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return Inertia::render('Fees/Index', [
-            'fees' => Fees::with(['client','collectedBy'])->paginate()
+            'fees' => Fees::orderByDesc('created_at')->with(['client','collectedBy'])->paginate()
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return Inertia::render('Fees/Create',[
+            'clients' => Client::get(['id','first_name','last_name'])->pluck('full_name','id')->toArray()
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        Validator::make($request->all(), [
+            'amount' => ['required', 'numeric'],
+            'client_id' => ['required','numeric'],
+        ])->validateWithBag('createFees');
+
+        Fees::create([
+            'description' => $request->description ?? null,
+            'amount' => $request->amount,
+            'method' => $request->get('method') ?? null,
+            'client_id' => $request->client_id,
+            'user_id' => auth()->user()->id,
+        ]);
+
+        return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Fees  $fees
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Fees $fees)
+    public function edit(Fees $fee)
     {
-        //
+        return Inertia::render('Fees/Edit', [
+            'fees' => $fee,
+            'clients' => Client::get(['id','first_name','last_name'])->pluck('full_name','id')->toArray()
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Fees  $fees
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Fees $fees)
+    public function update(Request $request, Fees $fee)
     {
-        //
+        Validator::make($request->all(), [
+            'amount' => ['required', 'numeric'],
+            'client_id' => ['required','numeric'],
+        ])->validateWithBag('updateFees');
+
+        $fee->update([
+            'description' => $request->description ?? null,
+            'amount' => $request->amount,
+            'method' => $request->get('method') ?? null,
+            'client_id' => $request->client_id,
+            'user_id' => auth()->user()->id,
+        ]);
+
+        return redirect()->back();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Fees  $fees
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Fees $fees)
+    public function destroy(Fees $fee)
     {
-        //
-    }
+        $fee->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Fees  $fees
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Fees $fees)
-    {
-        //
+        return redirect()->route('fees.index');
     }
 }

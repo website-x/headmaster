@@ -78,7 +78,7 @@ class ClientController extends Controller
     public function edit(Client $client)
     {
         return Inertia::render('Clients/Edit', [
-            'client' => $client
+            'client' => $client->load('payments')
         ]);
     }
 
