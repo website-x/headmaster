@@ -86,7 +86,63 @@
             </template>
         </jet-form-section>
 
-        <jet-form-section @submitted="updateClientForm" class="mt-5">
+        <div class="md:grid md:grid-cols-3 md:gap-6 mt-5">
+            <div class="md:col-span-1">
+                <div class="px-4 sm:px-0">
+                    <h3 class="text-lg font-medium text-gray-900">
+                        Payments
+                    </h3>
+
+                    <p class="mt-1 text-sm text-gray-600">
+                        Payments history
+                    </p>
+                </div>
+            </div>
+            <div class="mt-5 md:mt-0 md:col-span-2">
+                <div class="shadow overflow-hidden sm:rounded-md">
+                    <div class="px-4 py-5 bg-white sm:p-6">
+                        <table class="table-fixed">
+                            <thead>
+                            <tr>
+                                <th class="px-4 py-2">Description</th>
+                                <th class="px-4 py-2">Amount</th>
+                                <th class="px-4 py-2">When</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="payment in $page.client.payments">
+                                <td class="border px-4 py-2">
+                                    {{ payment.description }}
+                                    <small v-if="payment.method"><br>({{ payment.method }})</small>
+                                </td>
+                                <td class="border px-4 py-2"> ₹{{ payment.amount }}</td>
+                                <td class="border px-4 py-2"> {{ payment.last_updated_at }}</td>
+                                <td class="border px-4 py-2">
+                                    <inertia-link :href="$route('fees.edit',payment.id)">
+                                        <svg class="inline w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                                            <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
+                                        </svg>
+                                    </inertia-link>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                     <!--Action-->
+                    <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
+                        <inertia-link
+                            :href="$route('fees.create')"
+                            class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                            Add Payment
+                        </inertia-link>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--<jet-form-section @submitted="updateClientForm" class="mt-5">
             <template #title>
                 Payments
             </template>
@@ -112,18 +168,18 @@
                     </tr>
                     </tbody>
                 </table>
-
             </template>
-        </jet-form-section>
 
-        <inertia-link
-            :href="$route('fees.create')"
-            class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-            Add Payment
-        </inertia-link>
+            <template #actions>
+                <inertia-link
+                    :href="$route('fees.create')"
+                    class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                    Add Payment
+                </inertia-link>
+            </template>
+        </jet-form-section>-->
 
-
-        <!-- Delete Token Confirmation Modal -->
+        <!-- Delete Confirmation Modal -->
         <jet-confirmation-modal :show="apiTokenBeingDeleted" @close="apiTokenBeingDeleted = null">
             <template #title>
                 Delete Client
@@ -143,6 +199,7 @@
                 </jet-danger-button>
             </template>
         </jet-confirmation-modal>
+
     </div>
 </template>
 

@@ -4645,6 +4645,63 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -33365,83 +33422,119 @@ var render = function() {
         ])
       }),
       _vm._v(" "),
-      _c("jet-form-section", {
-        staticClass: "mt-5",
-        on: { submitted: _vm.updateClientForm },
-        scopedSlots: _vm._u([
-          {
-            key: "title",
-            fn: function() {
-              return [_vm._v("\n                Payments\n            ")]
-            },
-            proxy: true
-          },
-          {
-            key: "description",
-            fn: function() {
-              return [
-                _vm._v("\n                Payments history\n            ")
-              ]
-            },
-            proxy: true
-          },
-          {
-            key: "form",
-            fn: function() {
-              return [
-                _c("table", { staticClass: "table-responsive" }, [
-                  _c("thead", [
-                    _c("tr", [
-                      _c("th", { staticClass: "w-1/3 px-4 py-2" }, [
-                        _vm._v("Description")
+      _c("div", { staticClass: "md:grid md:grid-cols-3 md:gap-6 mt-5" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "mt-5 md:mt-0 md:col-span-2" }, [
+          _c("div", { staticClass: "shadow overflow-hidden sm:rounded-md" }, [
+            _c("div", { staticClass: "px-4 py-5 bg-white sm:p-6" }, [
+              _c("table", { staticClass: "table-fixed" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.$page.client.payments, function(payment) {
+                    return _c("tr", [
+                      _c("td", { staticClass: "border px-4 py-2" }, [
+                        _vm._v(
+                          "\n                                    " +
+                            _vm._s(payment.description) +
+                            "\n                                    "
+                        ),
+                        payment.method
+                          ? _c("small", [
+                              _c("br"),
+                              _vm._v("(" + _vm._s(payment.method) + ")")
+                            ])
+                          : _vm._e()
                       ]),
                       _vm._v(" "),
-                      _c("th", { staticClass: "w-2/3 px-4 py-2" }, [
-                        _vm._v("Amount")
+                      _c("td", { staticClass: "border px-4 py-2" }, [
+                        _vm._v(" ₹" + _vm._s(payment.amount))
                       ]),
                       _vm._v(" "),
-                      _c("th", { staticClass: "w-3/3 px-4 py-2" }, [
-                        _vm._v("When")
-                      ])
+                      _c("td", { staticClass: "border px-4 py-2" }, [
+                        _vm._v(" " + _vm._s(payment.last_updated_at))
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        { staticClass: "border px-4 py-2" },
+                        [
+                          _c(
+                            "inertia-link",
+                            {
+                              attrs: {
+                                href: _vm.$route("fees.edit", payment.id)
+                              }
+                            },
+                            [
+                              _c(
+                                "svg",
+                                {
+                                  staticClass: "inline w-4 h-4",
+                                  attrs: {
+                                    xmlns: "http://www.w3.org/2000/svg",
+                                    viewBox: "0 0 20 20",
+                                    fill: "currentColor"
+                                  }
+                                },
+                                [
+                                  _c("path", {
+                                    attrs: {
+                                      d:
+                                        "M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("path", {
+                                    attrs: {
+                                      "fill-rule": "evenodd",
+                                      d:
+                                        "M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z",
+                                      "clip-rule": "evenodd"
+                                    }
+                                  })
+                                ]
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      )
                     ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "tbody",
-                    _vm._l(_vm.$page.client.payments, function(payment) {
-                      return _c("tr", [
-                        _c("td", { staticClass: "px-4 py-2" }, [
-                          _vm._v(" " + _vm._s(payment.description))
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "px-4 py-2" }, [
-                          _vm._v(" ₹" + _vm._s(payment.amount))
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "px-4 py-2" }, [
-                          _vm._v(" " + _vm._s(payment.last_updated_at))
-                        ])
-                      ])
-                    }),
-                    0
-                  )
-                ])
-              ]
-            },
-            proxy: true
-          }
+                  }),
+                  0
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6"
+              },
+              [
+                _c(
+                  "inertia-link",
+                  {
+                    staticClass:
+                      "bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow",
+                    attrs: { href: _vm.$route("fees.create") }
+                  },
+                  [
+                    _vm._v(
+                      "\n                            Add Payment\n                        "
+                    )
+                  ]
+                )
+              ],
+              1
+            )
+          ])
         ])
-      }),
-      _vm._v(" "),
-      _c(
-        "inertia-link",
-        {
-          staticClass:
-            "bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow",
-          attrs: { href: _vm.$route("fees.create") }
-        },
-        [_vm._v("\n            Add Payment\n        ")]
-      ),
+      ]),
       _vm._v(" "),
       _c("jet-confirmation-modal", {
         attrs: { show: _vm.apiTokenBeingDeleted },
@@ -33509,7 +33602,40 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "md:col-span-1" }, [
+      _c("div", { staticClass: "px-4 sm:px-0" }, [
+        _c("h3", { staticClass: "text-lg font-medium text-gray-900" }, [
+          _vm._v("\n                        Payments\n                    ")
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "mt-1 text-sm text-gray-600" }, [
+          _vm._v(
+            "\n                        Payments history\n                    "
+          )
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { staticClass: "px-4 py-2" }, [_vm._v("Description")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "px-4 py-2" }, [_vm._v("Amount")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "px-4 py-2" }, [_vm._v("When")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
