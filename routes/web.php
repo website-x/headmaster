@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
 
-Route::view('/', 'welcome');
+Route::redirect('/', '/login', 307);
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function() {
     Route::get('dashboard', Controllers\DashboardController::class)->name('dashboard');
