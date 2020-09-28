@@ -67,7 +67,7 @@ class OfficeController extends Controller
     public function edit(Office $office)
     {
         return Inertia::render('Offices/Edit', [
-            'office' => $office
+            'office' => $office->load('employees')
         ]);
     }
 

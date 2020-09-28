@@ -20,6 +20,7 @@
                             <jet-nav-link href="/clients">Clients</jet-nav-link>
                             <jet-nav-link href="/fees">Fees</jet-nav-link>
                             <jet-nav-link href="/offices">Offices</jet-nav-link>
+                            <jet-nav-link href="/users">Users</jet-nav-link>
                         </div>
                     </div>
 

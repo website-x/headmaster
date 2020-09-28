@@ -78,6 +78,51 @@
         </jet-form-section>
 
 
+        <div class="md:grid md:grid-cols-3 md:gap-6 mt-5">
+            <div class="md:col-span-1">
+                <div class="px-4 sm:px-0">
+                    <h3 class="text-lg font-medium text-gray-900">
+                        Employees
+                    </h3>
+
+                    <p class="mt-1 text-sm text-gray-600">
+                        Employees from this office
+                    </p>
+                </div>
+            </div>
+            <div class="mt-5 md:mt-0 md:col-span-2">
+                <div class="shadow overflow-hidden sm:rounded-md">
+                    <div class="px-4 py-5 bg-white sm:p-6">
+                        <table class="table-fixed">
+                            <thead>
+                            <tr>
+                                <th class="px-4 py-2">Name</th>
+                                <th class="px-4 py-2">Role</th>
+                                <th class="px-4 py-2">With Us Since</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="employee in $page.office.employees">
+                                <td class="border px-4 py-2">
+                                    <p>{{ employee.name }}</p>
+                                </td>
+                                <td class="border px-4 py-2">{{ employee.role }}</td>
+                                <td class="border px-4 py-2">{{ employee.since }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
+                        <inertia-link
+                            :href="$route('users.create')"
+                            class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                            Add new user
+                        </inertia-link>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Delete Token Confirmation Modal -->
         <jet-confirmation-modal :show="apiTokenBeingDeleted" @close="apiTokenBeingDeleted = null">
             <template #title>

@@ -23,7 +23,7 @@ class OfficeFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
+            'name' => $this->faker->company,
             'address' => $this->faker->address,
             'city' => $this->faker->city,
             'state' => $this->faker->state,

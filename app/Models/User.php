@@ -7,15 +7,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
-use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens;
+    use HasRoles;
     use HasFactory;
     use HasProfilePhoto;
-    use HasTeams;
     use Notifiable;
     use TwoFactorAuthenticatable;
 
@@ -38,6 +37,7 @@ class User extends Authenticatable
         'remember_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
+        'user_since'
     ];
 
     /**
@@ -56,10 +56,33 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
+        'role',
+        'office_name',
+        'since'
     ];
 
     public function client()
     {
         return $this->hasMany(Client::class);
+    }
+
+    public function office()
+    {
+        return $this->belongsTo(Office::class);
+    }
+
+    public function getRoleAttribute()
+    {
+        return $this->roles()->first()->name ?? null;
+    }
+
+    public function getOfficeNameAttribute()
+    {
+        return $this->office->name ?? null;
+    }
+
+    public function getSinceAttribute()
+    {
+        return $this->created_at->diffForHumans();
     }
 }
