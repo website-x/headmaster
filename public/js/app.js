@@ -4669,39 +4669,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -33516,6 +33483,15 @@ var render = function() {
                   "flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6"
               },
               [
+                _c("p", { staticClass: "mr-5" }, [
+                  _c("small", [_vm._v("Total Payments: ")]),
+                  _vm._v(
+                    "\n                            " +
+                      _vm._s(_vm.$page.client.total_payments) +
+                      "\n                        "
+                  )
+                ]),
+                _vm._v(" "),
                 _c(
                   "inertia-link",
                   {
