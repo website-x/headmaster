@@ -1,12 +1,8 @@
 {
-    "name": "laravel/laravel",
+    "name": "website-x/headmaster",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": [
-        "framework",
-        "laravel"
-    ],
-    "license": "MIT",
+    "description": "CRM system for classroom fees",
+    "license": "proprietary",
     "require": {
         "php": "^7.3",
         "barryvdh/laravel-dompdf": "^0.8.7",

@@ -4669,6 +4669,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5207,6 +5215,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5279,6 +5294,13 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.vue");
 /* harmony import */ var _Components_BaseTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Components/BaseTable */ "./resources/js/Components/BaseTable.vue");
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -33403,11 +33425,12 @@ var render = function() {
                   _vm._l(_vm.$page.client.payments, function(payment) {
                     return _c("tr", [
                       _c("td", { staticClass: "border px-4 py-2" }, [
-                        _vm._v(
-                          "\n                                    " +
-                            _vm._s(payment.description) +
-                            "\n                                    "
-                        ),
+                        payment.description
+                          ? _c("p", [_vm._v(_vm._s(payment.description))])
+                          : _c("p", { staticClass: "font-semibold" }, [
+                              _vm._v("N/A")
+                            ]),
+                        _vm._v(" "),
                         payment.method
                           ? _c("small", [
                               _c("br"),
@@ -33426,7 +33449,7 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "td",
-                        { staticClass: "border px-4 py-2" },
+                        { staticClass: "border px-4 py-2 grid-cols-2 gap-x-4" },
                         [
                           _c(
                             "inertia-link",
@@ -33460,6 +33483,41 @@ var render = function() {
                                       d:
                                         "M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z",
                                       "clip-rule": "evenodd"
+                                    }
+                                  })
+                                ]
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              attrs: {
+                                href: _vm.$route("invoice.show", payment.id),
+                                target: "_new"
+                              }
+                            },
+                            [
+                              _c(
+                                "svg",
+                                {
+                                  staticClass: "inline w-4 h-4",
+                                  attrs: {
+                                    xmlns: "http://www.w3.org/2000/svg",
+                                    fill: "none",
+                                    viewBox: "0 0 24 24",
+                                    stroke: "currentColor"
+                                  }
+                                },
+                                [
+                                  _c("path", {
+                                    attrs: {
+                                      "stroke-linecap": "round",
+                                      "stroke-linejoin": "round",
+                                      "stroke-width": "2",
+                                      d:
+                                        "M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
                                     }
                                   })
                                 ]
@@ -34143,6 +34201,7 @@ var render = function() {
                         "form-input block w-full pl-7 pr-12 sm:text-sm sm:leading-5",
                       attrs: {
                         id: "amount",
+                        step: "0.01",
                         type: "number",
                         autocomplete: "amount",
                         placeholder: "5000"
@@ -34457,6 +34516,7 @@ var render = function() {
                             "form-input block w-full pl-7 pr-12 sm:text-sm sm:leading-5",
                           attrs: {
                             id: "amount",
+                            step: "0.01",
                             type: "number",
                             autocomplete: "amount",
                             placeholder: "5000"
@@ -34627,6 +34687,19 @@ var render = function() {
             key: "actions",
             fn: function() {
               return [
+                _c(
+                  "a",
+                  {
+                    staticClass:
+                      "mr-3 inline-flex items-center px-4 py-2 bg-white hover:bg-gray-100 text-gray-800 border border-transparent rounded-md font-semibold text-xs uppercase tracking-widest focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out border border-gray-300 rounded",
+                    attrs: {
+                      href: _vm.$route("invoice.show", _vm.$page.fees.id),
+                      target: "_new"
+                    }
+                  },
+                  [_vm._v("\n                Download Invoice\n            ")]
+                ),
+                _vm._v(" "),
                 _c(
                   "jet-action-message",
                   {
@@ -34825,11 +34898,11 @@ var render = function() {
                         var row = ref.row
                         return [
                           _c("td", { staticClass: "border px-4 py-2" }, [
-                            _vm._v(
-                              "\n                            " +
-                                _vm._s(row.description) +
-                                "\n                        "
-                            )
+                            row.description
+                              ? _c("p", [_vm._v(_vm._s(row.description))])
+                              : _c("p", { staticClass: "font-semibold" }, [
+                                  _vm._v("N/A")
+                                ])
                           ]),
                           _vm._v(" "),
                           _c("td", { staticClass: "border px-4 py-2" }, [
@@ -34894,7 +34967,10 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "td",
-                            { staticClass: "border px-4 py-2" },
+                            {
+                              staticClass:
+                                "border px-4 py-2 grid-cols-2 gap-x-4"
+                            },
                             [
                               _c(
                                 "inertia-link",
@@ -34907,7 +34983,7 @@ var render = function() {
                                   _c(
                                     "svg",
                                     {
-                                      staticClass: "inline w-4 h-4",
+                                      staticClass: "inline w-4 h-4 mr-2",
                                       attrs: {
                                         xmlns: "http://www.w3.org/2000/svg",
                                         viewBox: "0 0 20 20",
@@ -34928,6 +35004,41 @@ var render = function() {
                                           d:
                                             "M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z",
                                           "clip-rule": "evenodd"
+                                        }
+                                      })
+                                    ]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    href: _vm.$route("invoice.show", row.id),
+                                    target: "_new"
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "svg",
+                                    {
+                                      staticClass: "inline w-4 h-4",
+                                      attrs: {
+                                        xmlns: "http://www.w3.org/2000/svg",
+                                        fill: "none",
+                                        viewBox: "0 0 24 24",
+                                        stroke: "currentColor"
+                                      }
+                                    },
+                                    [
+                                      _c("path", {
+                                        attrs: {
+                                          "stroke-linecap": "round",
+                                          "stroke-linejoin": "round",
+                                          "stroke-width": "2",
+                                          d:
+                                            "M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
                                         }
                                       })
                                     ]

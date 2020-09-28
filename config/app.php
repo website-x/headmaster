@@ -124,6 +124,11 @@ return [
     'cipher' => 'AES-256-CBC',
 
     /*
+     * Address for invoice
+     */
+    'address_for_invoice' => env('ADDRESS_FOR_INVOICE'),
+
+    /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------

@@ -16,4 +16,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
         'fees' => Controllers\FeesController::class,
         'offices' => Controllers\OfficeController::class,
     ]);
+
+    Route::get('/invoice/fees/{id}', '\App\Http\Controllers\InvoiceController@show')->name('invoice.show');
 });
+

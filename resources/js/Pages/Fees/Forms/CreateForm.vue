@@ -24,7 +24,7 @@
                         ₹
                       </span>
                     </div>
-                    <jet-input id="amount" type="number" class="form-input block w-full pl-7 pr-12 sm:text-sm sm:leading-5" v-model="form.amount" autocomplete="amount" placeholder="5000" />
+                    <jet-input id="amount" step="0.01" type="number" class="form-input block w-full pl-7 pr-12 sm:text-sm sm:leading-5" v-model="form.amount" autocomplete="amount" placeholder="5000" />
                 </div>
                 <jet-input-error :message="form.error('amount')" class="mt-2" />
             </div>

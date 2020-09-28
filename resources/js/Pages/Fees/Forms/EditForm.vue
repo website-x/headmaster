@@ -25,7 +25,7 @@
                         ₹
                       </span>
                         </div>
-                        <jet-input id="amount" type="number" class="form-input block w-full pl-7 pr-12 sm:text-sm sm:leading-5" v-model="form.amount" autocomplete="amount" placeholder="5000" />
+                        <jet-input id="amount" step="0.01" type="number" class="form-input block w-full pl-7 pr-12 sm:text-sm sm:leading-5" v-model="form.amount" autocomplete="amount" placeholder="5000" />
                     </div>
                     <jet-input-error :message="form.error('amount')" class="mt-2" />
                 </div>
@@ -58,6 +58,13 @@
             </template>
 
             <template #actions>
+
+                <a :href="$route('invoice.show', $page.fees.id)"
+                   target="_new"
+                   class="mr-3 inline-flex items-center px-4 py-2 bg-white hover:bg-gray-100 text-gray-800 border border-transparent rounded-md font-semibold text-xs uppercase tracking-widest focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out border border-gray-300 rounded"
+                >
+                    Download Invoice
+                </a>
 
                 <jet-action-message :on="form.recentlySuccessful" class="mr-3">
                     Updated
