@@ -15,10 +15,18 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
+        $office_id = auth()->user()->office_id;
+        if (empty($office_id)) {
+            $clients = Client::with(['office', 'createdBy'])->paginate();
+        } else {
+            $clients = Client::with(['office', 'createdBy'])->where('office_id', $office_id)->paginate();
+        }
         return Inertia::render('Clients/Index', [
-            'clients' => Client::with(['office', 'createdBy'])->paginate()
+            //'clients' => Client::with(['office', 'createdBy'])->paginate()
+            'clients' => $clients
         ]);
     }
 
@@ -49,7 +57,7 @@ class ClientController extends Controller
             'city' => ['required', 'string'],
             'state' => ['required', 'string'],
             'country' => ['required', 'string'],
-            'phone' => ['required','unique:clients']
+            'phone' => ['required', 'unique:clients']
         ])->validateWithBag('createClient');
 
         Client::create([
@@ -100,7 +108,7 @@ class ClientController extends Controller
             'city' => ['required', 'string'],
             'state' => ['required', 'string'],
             'country' => ['required', 'string'],
-            'phone' => ['required',"unique:clients,phone,{$client->id}", ]
+            'phone' => ['required', "unique:clients,phone,{$client->id}",]
         ])->validateWithBag('updateClient');
 
         $client->update([

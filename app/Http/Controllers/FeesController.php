@@ -12,15 +12,26 @@ class FeesController extends Controller
 {
     public function index()
     {
+        $office_id = auth()->user()->office_id;
+        if (empty($office_id)) {
+            $fees_data = Fees::orderByDesc('created_at')->with(['client', 'collectedBy'])->paginate();
+        } else {
+            $fees_data = Fees::orderByDesc('fees.created_at')->with(['client', 'collectedBy'])
+            ->select('fees.*')
+            ->leftjoin('clients', 'fees.client_id', '=', 'clients.id')->where('clients.office_id', '=', $office_id)->paginate();
+        }
+       // print_r($fees_data);die;
+        // $fees_data=Fees::orderByDesc('created_at')->with(['client','collectedBy'])->paginate();
+
         return Inertia::render('Fees/Index', [
-            'fees' => Fees::orderByDesc('created_at')->with(['client','collectedBy'])->paginate()
+            'fees' => $fees_data
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Fees/Create',[
-            'clients' => Client::get(['id','first_name','last_name'])->pluck('full_name','id')->toArray()
+        return Inertia::render('Fees/Create', [
+            'clients' => Client::get(['id', 'first_name', 'last_name'])->pluck('full_name', 'id')->toArray()
         ]);
     }
 
@@ -28,7 +39,7 @@ class FeesController extends Controller
     {
         Validator::make($request->all(), [
             'amount' => ['required', 'numeric'],
-            'client_id' => ['required','numeric'],
+            'client_id' => ['required', 'numeric'],
         ])->validateWithBag('createFees');
 
         Fees::create([
@@ -46,7 +57,7 @@ class FeesController extends Controller
     {
         return Inertia::render('Fees/Edit', [
             'fees' => $fee,
-            'clients' => Client::get(['id','first_name','last_name'])->pluck('full_name','id')->toArray()
+            'clients' => Client::get(['id', 'first_name', 'last_name'])->pluck('full_name', 'id')->toArray()
         ]);
     }
 
@@ -54,7 +65,7 @@ class FeesController extends Controller
     {
         Validator::make($request->all(), [
             'amount' => ['required', 'numeric'],
-            'client_id' => ['required','numeric'],
+            'client_id' => ['required', 'numeric'],
         ])->validateWithBag('updateFees');
 
         $fee->update([

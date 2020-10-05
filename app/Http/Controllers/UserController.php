@@ -13,15 +13,21 @@ class UserController extends Controller
 {
     public function index()
     {
+        $office_id = auth()->user()->office_id;
+        if (empty($office_id)) {
+            $user_data = User::where('id', '!=', auth()->id())->orderByDesc('created_at')->paginate();
+        } else {
+            $user_data = User::where('id', '=', auth()->id())->orderByDesc('created_at')->paginate();
+        }
         return Inertia::render('Users/Index', [
-            'users' => User::where('id','!=',auth()->id())->orderByDesc('created_at')->paginate()
+            'users' => $user_data
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Users/Create',[
-            'offices' => Office::get(['id','name'])->pluck('name','id')->toArray(),
+        return Inertia::render('Users/Create', [
+            'offices' => Office::get(['id', 'name'])->pluck('name', 'id')->toArray(),
             'roles' => Role::get('name')->pluck('name')->toArray()
         ]);
     }
@@ -51,7 +57,7 @@ class UserController extends Controller
     {
         return Inertia::render('Users/Edit', [
             'user' => $user,
-            'offices' => Office::get(['id','name'])->pluck('name','id')->toArray(),
+            'offices' => Office::get(['id', 'name'])->pluck('name', 'id')->toArray(),
             'roles' => Role::get('name')->pluck('name')->toArray()
         ]);
     }

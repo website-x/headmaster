@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Office;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Validator;
@@ -16,8 +17,15 @@ class OfficeController extends Controller
      */
     public function index()
     {
+        $office_id = auth()->user()->office_id;
+        if (empty($office_id)) {
+            $office_data = Office::paginate();
+        } else {
+            $office_data = User::find(auth()->user()->id)->office()->paginate();
+        }
         return Inertia::render('Offices/Index', [
-            'offices' => Office::paginate()
+            //'offices' => Office::paginate()
+            'offices' => $office_data
         ]);
     }
 
@@ -42,7 +50,7 @@ class OfficeController extends Controller
         Validator::make($request->all(), [
             'name' => ['required', 'string'],
             'address' => ['nullable', 'unique:offices,address'],
-            'phone' => ['nullable','unique:offices,phone']
+            'phone' => ['nullable', 'unique:offices,phone']
         ])->validateWithBag('createOffice');
 
         Office::create([
@@ -82,8 +90,8 @@ class OfficeController extends Controller
     {
         Validator::make($request->all(), [
             'name' => ['required', 'string'],
-            'address' => ['nullable',"unique:offices,address,{$office->id}"],
-            'phone' => ['nullable',"unique:offices,phone,{$office->id}"],
+            'address' => ['nullable', "unique:offices,address,{$office->id}"],
+            'phone' => ['nullable', "unique:offices,phone,{$office->id}"],
         ])->validateWithBag('updateOffice');
 
         $office->update([
