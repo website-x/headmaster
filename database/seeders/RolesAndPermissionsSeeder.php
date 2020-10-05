@@ -20,18 +20,22 @@ class RolesAndPermissionsSeeder extends Seeder
         app()['cache']->forget('spatie.permission.cache');
 
         $permissions = [
-            'user-list',
-            'user-create',
-            'user-edit',
-            'user-delete',
-            'role-list',
-            'role-create',
-            'role-edit',
-            'role-delete',
-            'product-list',
-            'product-create',
-            'product-edit',
-            'product-delete'
+            'clients-list',
+            'clients-create',
+            'clients-edit',
+            'clients-delete',
+            'fees-list',
+            'fees-create',
+            'fees-edit',
+            'fees-delete',
+            'offices-list',
+            'offices-create',
+            'offices-edit',
+            'offices-delete',
+            'users-list',
+            'users-create',
+            'users-edit',
+            'users-delete',
         ];
 
         foreach ($permissions as $permission)

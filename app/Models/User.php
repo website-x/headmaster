@@ -58,7 +58,8 @@ class User extends Authenticatable
         'profile_photo_url',
         'role',
         'office_name',
-        'since'
+        'since',
+        'permissions'
     ];
 
     public function client()
@@ -84,5 +85,10 @@ class User extends Authenticatable
     public function getSinceAttribute()
     {
         return $this->created_at->diffForHumans();
+    }
+
+    public function getPermissionsAttribute()
+    {
+        return $this->getPermissionsViaRoles()->pluck('name');
     }
 }
