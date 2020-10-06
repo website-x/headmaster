@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             RolesAndPermissionsSeeder::class
         ]);
 
-        Office::factory(50)->create()->each(function($office) {
+        Office::factory(5)->create()->each(function($office) {
 
             // Create a user for each office
             $user = (User::factory(1)->make())->first();
@@ -46,6 +46,7 @@ class DatabaseSeeder extends Seeder
             // Create a fee for client created in the block above
             $fee = (Fees::factory(1)->make())->first();
             $fee->client()->associate($client);
+            $fee->office()->associate($office);
             $fee->collectedBy()->associate(User::inRandomOrder()->first());
             $fee->save();
         });

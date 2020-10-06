@@ -14,9 +14,13 @@ class Office extends Model
     {
         return $this->hasMany(Client::class);
     }
-
+    public function fees()
+    {
+        return $this->hasMany(Fees::class);
+    }
     public function employees()
     {
         return $this->hasMany(User::class);
     }
+    
 }

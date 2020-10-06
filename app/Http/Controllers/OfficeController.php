@@ -17,12 +17,14 @@ class OfficeController extends Controller
      */
     public function index()
     {
+        $role_name=User::find(auth()->user()->id)->role;
         $office_id = auth()->user()->office_id;
-        if (empty($office_id)) {
+        if (strtolower($role_name)=='admin') {
             $office_data = Office::paginate();
         } else {
             $office_data = User::find(auth()->user()->id)->office()->paginate();
         }
+       
         return Inertia::render('Offices/Index', [
             //'offices' => Office::paginate()
             'offices' => $office_data

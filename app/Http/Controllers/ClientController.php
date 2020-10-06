@@ -7,6 +7,8 @@ use App\Models\Office;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 
 class ClientController extends Controller
 {
@@ -19,13 +21,17 @@ class ClientController extends Controller
     public function index()
     {
         $office_id = auth()->user()->office_id;
-        if (empty($office_id)) {
+        $role_name = User::find(auth()->user()->id)->role;
+        if (strtolower($role_name) == 'admin') {
             $clients = Client::with(['office', 'createdBy'])->paginate();
         } else {
-            $clients = Client::with(['office', 'createdBy'])->where('office_id', $office_id)->paginate();
+            $clients = Client::whereHas('office', function (Builder $query) use ($office_id) {
+                $query->where('office_id', $office_id);
+            })
+            ->with(['office', 'createdBy'])
+            ->paginate();
         }
         return Inertia::render('Clients/Index', [
-            //'clients' => Client::with(['office', 'createdBy'])->paginate()
             'clients' => $clients
         ]);
     }

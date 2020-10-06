@@ -20,6 +20,7 @@ class CreateFeesTable extends Migration
             $table->string('method')->nullable();
 
             $table->foreignId('client_id')->constrained();
+            $table->foreignId('office_id')->constrained();
             $table->foreignId('user_id')->constrained();
 
             $table->softDeletes();

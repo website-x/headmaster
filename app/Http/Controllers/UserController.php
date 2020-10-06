@@ -13,8 +13,8 @@ class UserController extends Controller
 {
     public function index()
     {
-        $office_id = auth()->user()->office_id;
-        if (empty($office_id)) {
+        $role_name=User::find(auth()->user()->id)->role;
+        if (strtolower($role_name)=='admin') {
             $user_data = User::where('id', '!=', auth()->id())->orderByDesc('created_at')->paginate();
         } else {
             $user_data = User::where('id', '=', auth()->id())->orderByDesc('created_at')->paginate();

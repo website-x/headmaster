@@ -4,25 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Fees;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\Builder;
 
 class FeesController extends Controller
 {
     public function index()
     {
         $office_id = auth()->user()->office_id;
-        if (empty($office_id)) {
+        $role_name = User::find(auth()->user()->id)->role;
+        if (strtolower($role_name) == 'admin') {
             $fees_data = Fees::orderByDesc('created_at')->with(['client', 'collectedBy'])->paginate();
         } else {
-            $fees_data = Fees::orderByDesc('fees.created_at')->with(['client', 'collectedBy'])
-            ->select('fees.*')
-            ->leftjoin('clients', 'fees.client_id', '=', 'clients.id')->where('clients.office_id', '=', $office_id)->paginate();
+            $fees_data = Fees::whereHas('office', function (Builder $query) use ($office_id) {
+                $query->where('office_id', $office_id);
+            })
+                ->with(['client', 'collectedBy'])
+                ->paginate();
         }
-       // print_r($fees_data);die;
-        // $fees_data=Fees::orderByDesc('created_at')->with(['client','collectedBy'])->paginate();
-
         return Inertia::render('Fees/Index', [
             'fees' => $fees_data
         ]);
