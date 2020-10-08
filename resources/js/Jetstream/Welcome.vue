@@ -1,6 +1,8 @@
 <template>
     <div>
-        <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+        <div
+            class="shadow-xl gap-5 p-6 sm:px-20 px-4 py-2 bg-white border border-gray-200 "
+        >
             <!--<div>
                 <jet-application-logo class="block h-12 w-auto" />
             </div>-->
@@ -13,9 +15,12 @@
                 If you're an employee with us, Please abide by all the rules
                 that set out in the onboarding form.
             </div> -->
+            <br />
         </div>
 
-        <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+        <div
+            class="p-6 shadow-xl gap-5  sm:px-20 px-4 py-2 bg-white border-b border-gray-200 mt-2 "
+        >
             <p class="text-2xl text-center">Offices</p>
 
             <base-table
@@ -43,13 +48,35 @@
                 </template>
             </base-table>
         </div>
-
-        <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+        <div
+            class="p-6 shadow-xl sm:px-20 bg-white border-b border-gray-200  px-4 py-2 mt-2"
+        >
+            <a v-on:click="calenderOpen"><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    class="inline w-4 h-4"
+                   
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                </svg>
+             </a>
+                
+           
             <datetime
-                v-model="dateFilterShow"
+                v-model="dateFilter"
                 type="date"
-                input-style="border:1px solid black"
+                input-style=""
                 format="dd-LLL-yyyy"
+                input-id="calender_date"
+                
+               
             ></datetime>
 
             <h1 class="text-2xl text-center">
@@ -141,7 +168,6 @@
                 </template>
             </base-table>
         </div>
-
         <div class="bg-gray-200 bg-opacity-25 grid grid-cols-1 md:grid-cols-1">
             <div class="p-6">
                 <div class="flex items-center">
@@ -346,15 +372,21 @@ export default {
     },
     computed: {
         rowfilter: function() {
+            //console.log(this.dateFilter)
             return this.$page.fees_data.data.filter(row => {
                 return row.last_created_at.match(this.dateFilter);
             });
         }
     },
+    methods:{
+        calenderOpen(){
+            document.getElementById('calender_date').focus();
+        }
+    },
     watch: {
-        dateFilterShow: function() {
-            if (this.dateFilterShow != "") {
-                var d = new Date(this.dateFilterShow);
+        dateFilter: function() {
+            if (this.dateFilter != "") {
+                var d = new Date(this.dateFilter);
                 let month = d.toLocaleString("default", { month: "short" });
                 let year = d.toLocaleString("default", { year: "numeric" });
                 let day = d.toLocaleString("default", { day: "numeric" });
@@ -365,8 +397,6 @@ export default {
                 this.dateFilter = final_date;
             }
         }
-    },
-    
+    }
 };
 </script>
-
