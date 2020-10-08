@@ -17,7 +17,7 @@ class OfficeController extends Controller
      */
     public function index()
     {
-        $role_name=User::find(auth()->user()->id)->role;
+        $role_name=auth()->user()->role;
         $office_id = auth()->user()->office_id;
         if (strtolower($role_name)=='admin') {
             $office_data = Office::paginate();

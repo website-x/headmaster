@@ -21,15 +21,15 @@ class ClientController extends Controller
     public function index()
     {
         $office_id = auth()->user()->office_id;
-        $role_name = User::find(auth()->user()->id)->role;
+        $role_name = auth()->user()->role;
         if (strtolower($role_name) == 'admin') {
             $clients = Client::with(['office', 'createdBy'])->paginate();
         } else {
             $clients = Client::whereHas('office', function (Builder $query) use ($office_id) {
                 $query->where('office_id', $office_id);
             })
-            ->with(['office', 'createdBy'])
-            ->paginate();
+                ->with(['office', 'createdBy'])
+                ->paginate();
         }
         return Inertia::render('Clients/Index', [
             'clients' => $clients
@@ -43,7 +43,9 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Clients/Create');
+        return Inertia::render('Clients/Create', [
+            'offices' => Office::get(['id', 'name'])->toArray()
+        ]);
     }
 
     /**
@@ -54,6 +56,8 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
+
+
         Validator::make($request->all(), [
             'first_name' => ['required', 'string'],
             'last_name' => ['required', 'string'],
@@ -66,6 +70,15 @@ class ClientController extends Controller
             'phone' => ['required', 'unique:clients']
         ])->validateWithBag('createClient');
 
+        if (strtolower(auth()->user()->role) == 'admin' || (strtolower(auth()->user()->role) == 'employee'  && auth()->user()->office_id == null)) {
+            Validator::make($request->all(), [
+                'office_id' => ['required'],
+            ])->validateWithBag('createClient');
+            $office_id = $request->office_id;
+        } else {
+            $office_id = auth()->user()->office_id;
+        }
+
         Client::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -76,7 +89,7 @@ class ClientController extends Controller
             'state' => $request->state,
             'country' => $request->country,
             'phone' => $request->phone,
-            'office_id' => Office::first()->id,
+            'office_id' => $office_id,
             'user_id' => auth()->id()
         ]);
 
@@ -92,7 +105,9 @@ class ClientController extends Controller
     public function edit(Client $client)
     {
         return Inertia::render('Clients/Edit', [
-            'client' => $client->load('payments')
+            'client' => $client->load('payments'),
+            'offices' => Office::get(['id', 'name'])->toArray()
+
         ]);
     }
 
@@ -105,6 +120,7 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
+
         Validator::make($request->all(), [
             'first_name' => ['required', 'string'],
             'last_name' => ['required', 'string'],
@@ -117,6 +133,15 @@ class ClientController extends Controller
             'phone' => ['required', "unique:clients,phone,{$client->id}",]
         ])->validateWithBag('updateClient');
 
+        if (strtolower(auth()->user()->role) == 'admin' || (strtolower(auth()->user()->role) == 'employee'  && auth()->user()->office_id == null)) {
+            Validator::make($request->all(), [
+                'office_id' => ['required'],
+            ])->validateWithBag('createClient');
+            $office_id = $request->office_id;
+        } else {
+            $office_id = auth()->user()->office_id;
+        }
+
         $client->update([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -127,7 +152,7 @@ class ClientController extends Controller
             'state' => $request->state,
             'country' => $request->country,
             'phone' => $request->phone,
-            'office_id' => Office::first()->id,
+            'office_id' => $office_id,
             'user_id' => auth()->id()
         ]);
 

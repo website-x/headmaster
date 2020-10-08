@@ -9,8 +9,7 @@
         </template>
 
         <template #form>
-
-            <div class="col-span-6 sm:col-span-4">
+           <div class="col-span-6 sm:col-span-4">
                 <jet-label for="first_name" value="First name" />
                 <jet-input id="first_name" type="text" class="mt-1 block w-full" v-model="form.first_name" autocomplete="first_name" />
                 <jet-input-error :message="form.error('first_name')" class="mt-2" />
@@ -63,6 +62,25 @@
                 <vue-tel-input v-model="form.phone" />
                 <jet-input-error :message="form.error('phone')" class="mt-2" />
             </div>
+            
+            <template v-if="$page.user.role=='admin' || ($page.user.role=='employee' && $page.user.office_id==null)">
+            <div class="col-span-6 sm:col-span-4">
+                <jet-label for="office" value="Office" />
+                <select
+                        v-model="form.office_id"
+                        class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                    >
+                        <option :value="null" selected>Select Office</option>
+                        <option
+                            v-for="(office, index) in $page.offices"
+                            :value="office.id" :key="index"
+                        >
+                            {{ office.name }}
+                        </option>
+                    </select> 
+                    <jet-input-error :message="form.error('office_id')" class="mt-2" />
+            </div>
+            </template>
         </template>
 
         <template #actions>
@@ -114,6 +132,7 @@
                     state: null,
                     country: null,
                     phone: null,
+                    office_id: null,
                 }, {
                     bag: 'createClient',
                     resetOnSuccess: false,

@@ -10,8 +10,8 @@ class Fees extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $appends = ['last_updated_at'];
-
+    protected $appends = ['last_updated_at','last_created_at'];
+    
     public function client()
     {
         return $this->belongsTo(Client::class);
@@ -25,9 +25,13 @@ class Fees extends Model
     {
         return $this->belongsTo(Office::class);
     }
-
     public function getLastUpdatedAtAttribute()
     {
         return $this->updated_at != null ? $this->updated_at->format('d-M-Y') : null;
     }
+    public function getLastCreatedAtAttribute()
+    {
+        return $this->created_at != null ? $this->created_at->format('d-M-Y') : null;
+    }
+    
 }

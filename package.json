@@ -26,8 +26,12 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "luxon": "^1.25.0",
         "vue-country-region-select": "^2.0.14",
+        "vue-datetime": "^1.0.0-beta.14",
+        "vue-search-select": "^2.9.3",
         "vue-tel-input": "^4.4.0",
+        "weekstart": "^1.0.1",
         "ziggy-js": "^0.9.4"
     }
 }
