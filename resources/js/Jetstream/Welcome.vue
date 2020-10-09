@@ -56,7 +56,7 @@
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    class="inline w-4 h-4"
+                    class="inline w-4 h-4 float-left"
                    
                 >
                     <path
@@ -67,12 +67,10 @@
                     />
                 </svg>
              </a>
-                
-           
             <datetime
                 v-model="dateFilter"
                 type="date"
-                input-style=""
+                input-style="width:1px;"
                 format="dd-LLL-yyyy"
                 input-id="calender_date"
                 
