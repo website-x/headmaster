@@ -19,5 +19,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
 
     Route::get('/generate/{id}', '\App\Http\Controllers\DashboardController@generate_export')->name('generate.invoice');
     Route::get('/generatefees/{id}', '\App\Http\Controllers\FeesController@generate_fullexport')->name('generate.fullinvoice');
+    Route::post('/searchdata', '\App\Http\Controllers\ClientController@tnt_searchData')->name('searchdata');
 });
 

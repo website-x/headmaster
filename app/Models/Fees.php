@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 class Fees extends Model
 {
     use HasFactory, SoftDeletes;
+    use Searchable;
 
     protected $appends = ['last_updated_at','last_created_at'];
     
@@ -32,6 +34,25 @@ class Fees extends Model
     public function getLastCreatedAtAttribute()
     {
         return $this->created_at != null ? $this->created_at->format('d-M-Y') : null;
+    }
+    public function searchableAs()
+    {
+        return 'fees_index';
+    }
+    public function toSearchableArray()
+    {
+       
+        $array = $this->toArray();
+     
+        return [
+            'id' => $this->id,
+            'description' => $this->description,
+            'amount' => $this->amount,
+            'method' => $this->method,
+           
+        ]; 
+        //return $array;
+        
     }
     
 }

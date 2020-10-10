@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Office;
+use App\Models\Fees;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ClientController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -170,5 +172,47 @@ class ClientController extends Controller
         $client->delete();
 
         return redirect()->route('clients.index');
+    }
+    public function tnt_searchData(Request $request)
+    {
+        $office_id = auth()->user()->office_id;
+        $role_name = auth()->user()->role;
+        $user_id = auth()->user()->id;
+
+        $selectOption = !empty($request->selectOption) ? $request->selectOption : '';
+        $searchItem = !empty($request->searchItem) ? $request->searchItem : '';
+        $DataSent=array();
+        if (strtolower($selectOption) == 'clients') {
+            if (strtolower($role_name) == 'admin') {
+                $DataSent = Client::search($searchItem)->get();
+            } else {
+                $DataSent = Client::search($searchItem)->where('office_id', $office_id)->get();
+            }
+        }
+        else if (strtolower($selectOption) == 'users') {
+            if (strtolower($role_name) == 'admin') {
+                $DataSent = User::search($searchItem)->get();
+            } else {
+                $DataSent = User::search($searchItem)->where('id', $user_id)->get();
+            }
+        }
+        else if (strtolower($selectOption) == 'offices') {
+            if (strtolower($role_name) == 'admin') {
+                $DataSent = Office::search($searchItem)->get();
+            } else {
+                $DataSent = Office::search($searchItem)->where('office_id', $office_id)->get();
+            }
+        }
+        else if (strtolower($selectOption) == 'fees') {
+            if (strtolower($role_name) == 'admin') {
+               
+                $DataSent = Fees::search($searchItem)->get();
+               
+            } else {
+                $DataSent = Fees::search($searchItem)->where('office_id', $office_id)->get();
+            }
+        }
+        
+     return response()->json($DataSent);
     }
 }

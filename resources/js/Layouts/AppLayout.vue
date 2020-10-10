@@ -78,8 +78,12 @@
                     </div>
                 </div>
 
-                <div class="py-2 px-5" style="position:relative" >
-                    <div class="hidden sm:flex sm:items-center sm:ml-3" style="position:fixed; bottom:10px;">
+                <div class="py-2 px-5" style="position:relative">
+                    <div
+                        class="hidden sm:flex sm:items-center sm:ml-3"
+                        style="position:fixed; bottom:10px;"
+                    >
+                   
                         <div>
                             <jet-dropdown align="" width="48">
                                 <template #trigger>
@@ -102,7 +106,7 @@
                                         Manage Account
                                     </div>
 
-                                    <jet-dropdown-link href="/user/profile" >
+                                    <jet-dropdown-link href="/user/profile">
                                         Profile
                                     </jet-dropdown-link>
 
@@ -213,6 +217,55 @@
             <!-- Content -->
             <div class="bg-white h-full pt-8">
                 <div class="text-center w-full text-grey-darkest">
+                    <div class="inline relative">
+                        <div id="select-box" class="inline-block">
+                            <select
+                                class="bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                v-model="searchForms.selectOption"
+                            >
+                                <option :value="null">-Select-</option>
+                                <option value="clients">Clients</option>
+                                <option value="offices">Offices</option>
+                                <option value="fees">Fees</option>
+                                 <option value="users">Users</option>
+                            </select>
+                        </div>
+                        <div id="text-box" class="inline-block">
+                            <input
+                                type="textbox"
+                                class=" border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                placeholder="Search here"
+                                v-on:input="searchData"
+                                v-model="searchForms.searchItem"
+                            />
+                            <div
+                                class="autocomplete"
+                                v-if="LIST_TOGGLE == true"
+                            >
+                                <ul class="autocomplete-results">
+                                    <li
+                                        v-for="(result, i) in LIST_DATA"
+                                        :key="i"
+                                        class="autocomplete-result "
+                                    >
+                                    <template v-if="searchForms.selectOption=='clients'">
+                                       <a :href="$route('clients.edit',result.id)" class="cursor-pointer">{{ result.first_name }}</a>
+                                    </template>
+                                    <template v-if="searchForms.selectOption=='offices'">
+                                         <a :href="$route('offices.edit',result.id)" class="cursor-pointer">{{ result.name }}</a>
+                                    </template>
+                                    <template v-if="searchForms.selectOption=='fees'">
+                                         <a :href="$route('fees.edit',result.id)" class="cursor-pointer">{{ result.description }}</a>
+                                    </template>
+                                     <template v-if="searchForms.selectOption=='users'">
+                                         <a :href="$route('users.edit',result.id)" class="cursor-pointer">{{ result.name }}</a>
+                                    </template>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
                     <header class="bg-white shadow">
                         <div
                             class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8"
@@ -253,7 +306,13 @@ export default {
 
     data() {
         return {
-            showingNavigationDropdown: false
+            showingNavigationDropdown: false,
+            searchForms: {
+                selectOption: null,
+                searchItem: null
+            },
+            LIST_TOGGLE: false,
+            LIST_DATA: []
         };
     },
 
@@ -269,11 +328,23 @@ export default {
                 }
             );
         },
-
         logout() {
             axios.post("/logout").then(response => {
                 window.location = "/";
             });
+        },
+        searchData() {
+            if (this.searchForms.selectOption === null) {
+                alert("please select option");
+            } else {
+                this.LIST_TOGGLE=false;
+                axios.post("/searchdata", this.searchForms).then(response => {
+                    this.LIST_DATA = response.data;
+                    if (response.data.length > 0) {
+                        this.LIST_TOGGLE = true;
+                    }
+                });
+            }
         }
     },
 
@@ -288,5 +359,30 @@ export default {
 #main {
     display: grid;
     grid-template-columns: 10rem auto;
+}
+.autocomplete {
+    position: absolute;
+    width: 80%;
+}
+
+.autocomplete-results {
+    padding: 0;
+    margin: 0;
+    border: 1px solid #eeeeee;
+    height: 120px;
+    overflow: auto;
+    background-color: #E5E7EB;
+}
+
+.autocomplete-result {
+    list-style: none;
+    text-align: left;
+    padding: 4px 2px;
+    border-bottom: 1px solid black;
+   
+}
+
+.autocomplete-result:hover {
+    color: black;
 }
 </style>

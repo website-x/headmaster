@@ -9,6 +9,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Laravel\Scout\Searchable;
 
 class User extends Authenticatable
 {
@@ -17,6 +18,8 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use Searchable;
+    
 
     /**
      * The attributes that are mass assignable.
@@ -91,4 +94,19 @@ class User extends Authenticatable
     {
         return $this->getPermissionsViaRoles()->pluck('name');
     }
+    public function searchableAs()
+    {
+        return 'users_index';
+    }
+    public function toSearchableArray()
+    {
+        
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            
+        ];
+    }
+    
 }
