@@ -79,7 +79,7 @@
                             <th class="px-4 py-2">
                                 Description
                             </th>
-                           
+
 
                             <th class="px-4 py-2">Collected By</th>
                             <th class="px-4 py-2">Office name</th>
@@ -115,7 +115,7 @@
                                 </p>
                                 <p v-else class="font-semibold">N/A</p>
                             </td>
-                            
+
 
                             <td class="border px-4 py-2">
                                 {{ row.collected_by.name }}

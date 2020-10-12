@@ -1,28 +1,9 @@
 <template>
     <div>
-        <div
-            class="shadow-xl gap-5 p-6 sm:px-20 px-4 py-2 bg-white border border-gray-200 "
-        >
-            <!--<div>
-                <jet-application-logo class="block h-12 w-auto" />
-            </div>-->
-
-            <div class="mt-8 text-2xl">
-                Welcome
-            </div>
-
-            <!-- <div class="mt-6 text-gray-500">
-                If you're an employee with us, Please abide by all the rules
-                that set out in the onboarding form.
-            </div> -->
-            <br />
-        </div>
-
-        <div
-            class="p-6 shadow-xl gap-5  sm:px-20 px-4 py-2 bg-white border-b border-gray-200 mt-2 "
-        >
+        <!--Offices Card-->
+        <div class="p-6 shadow-xl gap-5 sm:px-20 px-4 py-2 bg-white border-b border-gray-200 rounded-lg">
             <p class="text-2xl text-center">Offices</p>
-
+            <br>
             <base-table
                 class="table-auto text-center"
                 :data="$page.office_data.data"
@@ -48,17 +29,16 @@
                 </template>
             </base-table>
         </div>
-        <div
-            class="p-6 shadow-xl sm:px-20 bg-white border-b border-gray-200  px-4 py-2 mt-2"
-        >
-            <a v-on:click="calenderOpen"><svg
+
+        <!-- Invoices Card-->
+        <div class="p-6 shadow-xl sm:px-20 bg-white border-b border-gray-200 px-4 py-2 mt-5 rounded-lg">
+            <a v-on:click="calenderOpen">
+                <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    class="inline w-4 h-4 float-left"
-                   
-                >
+                    class="inline w-8 h-8 float-left">
                     <path
                         stroke-linecap="round"
                         stroke-linejoin="round"
@@ -73,20 +53,17 @@
                 input-style="width:1px;"
                 format="dd-LLL-yyyy"
                 input-id="calender_date"
-                
-               
             ></datetime>
 
             <h1 class="text-2xl text-center">
                 Invoices
-
                 <a
                     target="_new"
                     :href="$route('generate.invoice', 'pdf')"
                     class=" float-right "
                 >
                     <svg
-                        class="inline w-4 h-4"
+                        class="inline w-5 h-5"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -106,7 +83,7 @@
                     class=" float-right "
                 >
                     <svg
-                        class="inline mr-5 w-4 h-4"
+                        class="inline mr-5 w-5 h-5"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -166,7 +143,9 @@
                 </template>
             </base-table>
         </div>
-        <div class="bg-gray-200 bg-opacity-25 grid grid-cols-1 md:grid-cols-1">
+
+
+        <!--<div class="bg-gray-200 bg-opacity-25 grid grid-cols-1 md:grid-cols-1">
             <div class="p-6">
                 <div class="flex items-center">
                     <svg
@@ -324,7 +303,7 @@
                 </div>
             </div>
 
-            <!--<div class="p-6 border-t border-gray-200 md:border-l">
+            &lt;!&ndash;<div class="p-6 border-t border-gray-200 md:border-l">
                 <div class="flex items-center">
                     <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-400">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -347,8 +326,8 @@
                         </div>
                     </inertia-link>
                 </div>
-            </div>-->
-        </div>
+            </div>&ndash;&gt;
+        </div>-->
     </div>
 </template>
 <script>

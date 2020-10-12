@@ -107,7 +107,7 @@
 
                 <div class="col-span-6 sm:col-span-4">
                     <jet-label for="State" value="State" />
-                    <!--                    <region-select v-model="form.state" className="form-input rounded-md shadow-sm mt-1 block w-full" :country="form.country" :region="form.state" />-->
+                    <region-select v-model="form.state" className="form-input rounded-md shadow-sm mt-1 block w-full" :country="form.country" :region="form.state" />
                     <jet-input-error
                         :message="form.error('state')"
                         class="mt-2"
@@ -137,7 +137,7 @@
                         class="mt-2"
                     />
                 </div>
-                
+
                 <template
                     v-if="
                         $page.user.role == 'admin' ||
@@ -151,7 +151,7 @@
                             v-model="form.office_id"
                             class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
                         >
-                            <option :value="null" 
+                            <option :value="null"
                                 >Select Office</option
                             >
                             <option

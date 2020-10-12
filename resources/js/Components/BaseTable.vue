@@ -21,9 +21,9 @@
             </tbody>
         </table>
 
-        <div class="bg-gray-100 self-center">
+        <div class="self-center mt-3">
             <template v-for="link in links">
-                <li v-if="link.url != null" :class="{ 'inline-block text-white bg-gray-500 text-center px-4 py-2 m-2': link.active, 'inline-block text-white bg-blue-500 text-center px-4 py-2 m-2': ! link.active  }">
+                <li v-if="link.url != null" :class="['ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150', {'bg-gray-100': link.active }]">
                     <inertia-link :href="link.url">
                         {{ link.label }}
                     </inertia-link>
