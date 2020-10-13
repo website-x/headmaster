@@ -143,7 +143,8 @@
                     <ul class="border border-gray-200 rounded-lg p-4 text-center mt-1 ml-1 shadow-lg">
                         <li
                             v-for="(result, i) in LIST_DATA"
-                            :key="i">
+                            :key="i"
+                            class="border-b border-gray-200">
                             <template v-if="searchForms.selectOption=='clients'">
                                 <a :href="$route('clients.edit',result.id)">{{ result.first_name }}</a>
                             </template>
@@ -271,10 +272,8 @@ export default {
     background-color: #fcfcfc;
 }
 
-autocomplete > ul > li {
+.autocomplete > ul > li {
     list-style: none;
-    text-align: left;
-    padding: 4px 2px;
-    border-bottom: 1px solid black;
+    padding-top: 8px;
 }
 </style>
