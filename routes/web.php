@@ -20,5 +20,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
     Route::get('/generate/{id}', '\App\Http\Controllers\DashboardController@generate_export')->name('generate.invoice');
     Route::get('/generatefees/{id}', '\App\Http\Controllers\FeesController@generate_fullexport')->name('generate.fullinvoice');
     Route::post('/searchdata', '\App\Http\Controllers\ClientController@tnt_searchData')->name('searchdata');
+
+    /*
+     * Site Configuration crud
+     */
+    Route::get('/settings','\App\Http\Controllers\SettingsController@index')->name('settings.index');
+    Route::get('/settings/{setting}','\App\Http\Controllers\SettingsController@edit')->name('settings.edit');
+    Route::patch('/settings/{setting}/update','\App\Http\Controllers\SettingsController@update')->name('settings.update');
 });
 

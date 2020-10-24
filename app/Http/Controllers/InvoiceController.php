@@ -20,11 +20,4 @@ class InvoiceController extends Controller
         else
             return $pdf->stream();
     }
-
-    public function test()
-    {
-        return view('layouts.invoice', [
-            'fees' => Fees::first()
-        ]);
-    }
 }

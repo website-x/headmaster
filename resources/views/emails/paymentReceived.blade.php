@@ -111,7 +111,7 @@
 
 <body>
 <div class="invoice-box">
-    <p class="banner">INVOICE</p>
+    <p class="banner">Payment Received</p>
     <table cellpadding="0" cellspacing="0">
         <tr class="top">
             <td colspan="2">

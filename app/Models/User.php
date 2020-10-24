@@ -19,7 +19,6 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
     use Searchable;
-    
 
     /**
      * The attributes that are mass assignable.
@@ -60,6 +59,7 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
         'role',
+        'is_admin',
         'office_name',
         'since',
         'permissions'
@@ -78,6 +78,14 @@ class User extends Authenticatable
     public function getRoleAttribute()
     {
         return $this->roles()->first()->name ?? null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsAdminAttribute()
+    {
+        return optional($this->roles()->first())->name == 'admin';
     }
 
     public function getOfficeNameAttribute()
@@ -100,13 +108,13 @@ class User extends Authenticatable
     }
     public function toSearchableArray()
     {
-        
+
         return [
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            
+
         ];
     }
-    
+
 }

@@ -15,13 +15,14 @@ class DashboardController extends Controller
 {
     public function __invoke()
     {
-        $role_name = auth()->user()->role;
         $office_id = auth()->user()->office_id;
+
         $user = auth()->user();
-        if (strtolower($role_name) == 'admin') {
+
+        if ( auth()->user()->is_admin ) {
             $condition = '!=';
             $office_id = 0;
-            $fees_data = Fees::orderByDESC('created_at')->with(['client', 'collectedBy'])->paginate();
+            $fees_data = Fees::with(['client', 'collectedBy'])->orderByDESC('created_at')->paginate();
         } else {
             $condition = '=';
             $fees_data = Fees::whereHas('office', function (Builder $query) use ($office_id) {
@@ -31,7 +32,7 @@ class DashboardController extends Controller
                 ->orderBy('created_at','DESC')
                 ->paginate();
         }
-       
+
         $office_data = Office::orderByDesc('offices.id')
             ->select('name', DB::raw('SUM(amount) AS total_amount'), DB::raw('sum(if(date(fees.created_at) = date(now()),amount,0)) as today_amount'), 'offices.id as id')
             ->leftjoin('fees', 'offices.id', '=', 'fees.office_id')
@@ -39,7 +40,7 @@ class DashboardController extends Controller
             ->groupBy('offices.id')
             ->paginate();
 
-        if (strtolower($role_name) == 'admin') {
+        if ( auth()->user()->is_admin ) {
             $clients_count = Client::count();
             $offices_count = Office::count();
             $employees_count = User::count();

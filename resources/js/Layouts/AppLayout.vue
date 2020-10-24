@@ -2,7 +2,7 @@
     <div class="font-sans antialiased h-screen">
         <div id="main" class="pt-0">
             <!-- Sidebar -->
-            <div class="bg-green-700 h-full min-h-screen">
+            <div class="h-full min-h-screen" style="background: #16697a">
                 <div class="py-2 px-5 mt-2">
                     <div class="flex items-center text-center h-full w-48 pl-6">
                         <a href="/dashboard">
@@ -45,11 +45,12 @@
                 </div>
                 <div class="py-2 px-5 ">
                     <div class="group relative sidebar-item with-children">
+
                         <jet-nav-link
                             href="/offices"
                             class="block xl:flex xl:items-center text-center xl:text-left shadow-light xl:shadow-none py-6 xl:py-2 xl:px-4"
                             :active="$page.currentRouteName == 'offices.index'"
-                        >
+                            v-if="$page.user.is_admin">
                             Offices
                         </jet-nav-link>
                     </div>
@@ -61,6 +62,16 @@
                             class="block xl:flex xl:items-center text-center xl:text-left shadow-light xl:shadow-none py-6 xl:py-2 xl:px-4"
                             :active="$page.currentRouteName == 'users.index'">
                             Users
+                        </jet-nav-link>
+                    </div>
+                </div>
+                <div class="py-2 px-5" v-if="$page.user.role == 'admin'">
+                    <div class="group relative sidebar-item with-children">
+                        <jet-nav-link
+                            href="/settings"
+                            class="block xl:flex xl:items-center text-center xl:text-left shadow-light xl:shadow-none py-6 xl:py-2 xl:px-4"
+                            :active="$page.currentRouteName == 'settings.index'">
+                            Settings
                         </jet-nav-link>
                     </div>
                 </div>
