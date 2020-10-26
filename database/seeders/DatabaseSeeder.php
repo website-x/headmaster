@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Client;
+use App\Models\Description;
 use App\Models\Fees;
 use App\Models\Office;
+use App\Models\PaymentMethod;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\Seeder;
@@ -28,6 +30,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolesAndPermissionsSeeder::class
         ]);
+
+        Description::factory(5)->create();
+        PaymentMethod::factory(5)->create();
 
         Office::factory(50)->create()->each(function($office) {
 

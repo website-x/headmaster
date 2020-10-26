@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Mail\PaymentReceived;
 use App\Models\Client;
+use App\Models\Description;
 use App\Models\Fees;
+use App\Models\PaymentMethod;
 use App\Models\Setting;
 use App\Models\User;
 use App\Models\Office;
@@ -43,7 +45,9 @@ class FeesController extends Controller
     {
         return Inertia::render('Fees/Create', [
             'clients' => Client::get(['id', 'first_name', 'last_name'])->pluck('full_name', 'id')->toArray(),
-            'offices' => Office::get(['id', 'name'])->toArray()
+            'offices' => Office::get(['id', 'name'])->toArray(),
+            'descriptions' => Description::get()->toArray(),
+            'methods' => PaymentMethod::get()->toArray(),
         ]);
     }
 
@@ -52,14 +56,16 @@ class FeesController extends Controller
         Validator::make($request->all(), [
             'amount' => 'required|numeric',
             'client_id' => 'required|numeric',
+            'description' => 'required',
+            'method' => 'required',
         ])->sometimes('office_id','required',function($input){
-            return auth()->user()->is_admin === true;
+            return auth()->user()->is_admin;
         })->validateWithBag('createFees');
 
         $fees = Fees::create([
-            'description' => $request->description ?? null,
+            'description' => optional($request->description)['value'] ?? null,
             'amount' => $request->amount,
-            'method' => $request->get('method') ?? null,
+            'method' => optional($request->get('method'))['value'] ?? null,
             'client_id' => $request->client_id,
             'office_id' => auth()->user()->is_admin === true ? $request->office_id : auth()->user()->office->id,
             'user_id' => auth()->user()->id,
@@ -80,7 +86,9 @@ class FeesController extends Controller
         return Inertia::render('Fees/Edit', [
             'fees' => $fee,
             'clients' => Client::get(['id', 'first_name', 'last_name'])->pluck('full_name', 'id')->toArray(),
-            'offices' => Office::get(['id', 'name'])->toArray()
+            'offices' => Office::get(['id', 'name'])->toArray(),
+            'descriptions' => Description::get()->toArray(),
+            'methods' => PaymentMethod::get()->toArray(),
         ]);
     }
 
@@ -89,14 +97,18 @@ class FeesController extends Controller
         Validator::make($request->all(), [
             'amount' => ['required', 'numeric'],
             'client_id' => ['required', 'numeric'],
-
-        ])->validateWithBag('updateFees');
+            'description' => 'required',
+            'method' => 'required',
+        ])->sometimes('office_id','required',function($input){
+            return auth()->user()->is_admin;
+        })->validateWithBag('updateFees');
 
         $fee->update([
-            'description' => $request->description ?? null,
+            'description' => optional($request->description)['value'] ?? null,
             'amount' => $request->amount,
-            'method' => $request->get('method') ?? null,
+            'method' => optional($request->get('method'))['value'] ?? null,
             'client_id' => $request->client_id,
+            'office_id' => auth()->user()->is_admin === true ? $request->office_id : auth()->user()->office->id,
             'user_id' => auth()->user()->id,
         ]);
 

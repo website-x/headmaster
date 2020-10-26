@@ -39,3 +39,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
     Route::patch('/settings/{setting}/update','\App\Http\Controllers\SettingsController@update')->name('settings.update');
 });
 
+Route::post('configurations/create/paymentDescription','\App\Http\Controllers\ConfigurationController@createDescription')->name('createPaymentDescription');
+Route::post('configurations/create/paymentMethod', '\App\Http\Controllers\ConfigurationController@createDescription')->name('createPaymentMethod');
+

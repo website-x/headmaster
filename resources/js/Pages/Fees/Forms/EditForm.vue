@@ -7,6 +7,8 @@
 
             <template #description>
                 Edit payment information
+                <br>
+                {{ $page.fees.description}}
             </template>
 
             <template #form>
@@ -41,14 +43,41 @@
                     />
                 </div>
 
+                <div class="col-span-6 sm:col-span-4" v-if="$page.user.role =='admin'">
+                    <jet-label for="office" value="Office" />
+                    <select
+                        v-model="form.office_id"
+                        class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                    >
+                        <option :value="null" selected>Select Office</option>
+                        <option
+                            v-for="(office, index) in $page.offices"
+                            :value="office.id"
+                            :key="index"
+                        >
+                            {{ office.name }}
+                        </option>
+                    </select>
+                    <jet-input-error
+                        :message="form.error('office_id')"
+                        class="mt-2"
+                    />
+                </div>
+
                 <div class="col-span-6 sm:col-span-4">
                     <jet-label for="description" value="Description" />
-                    <jet-input
-                        id="description"
-                        type="text"
-                        class="mt-1 block w-full"
+
+                    <multiselect
                         v-model="form.description"
-                        autocomplete="Description"
+                        :options="descriptions"
+                        :searchable="true"
+                        :close-on-select="true"
+                        :show-labels="true"
+                        :taggable="true"
+                        @tag="createDescription"
+                        :multiple="false"
+                        track-by="value"
+                        label="value"
                         placeholder="Admission Fees" />
 
                     <jet-input-error
@@ -80,14 +109,20 @@
 
                 <div class="col-span-6 sm:col-span-4">
                     <jet-label for="method" value="Method" />
-                    <jet-input
-                        id="method"
-                        type="text"
-                        class="mt-1 block w-full"
+
+                    <multiselect
                         v-model="form.method"
-                        autocomplete="method"
-                        placeholder="Cash / Bank Transfer"
-                    />
+                        :options="methods"
+                        :searchable="true"
+                        :close-on-select="true"
+                        :show-labels="true"
+                        :taggable="true"
+                        @tag="createMethod"
+                        :multiple="false"
+                        track-by="value"
+                        label="value"
+                        placeholder="Payment method" />
+
                     <jet-input-error
                         :message="form.error('method')"
                         class="mt-2"
@@ -172,6 +207,8 @@ import JetSecondaryButton from "@/Jetstream/SecondaryButton";
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal";
 import JetDangerButton from "@/Jetstream/DangerButton";
 import { ModelSelect } from "vue-search-select";
+import 'vue-multiselect/dist/vue-multiselect.min.css'
+const axios = require('axios')
 
 export default {
     components: {
@@ -198,7 +235,8 @@ export default {
                     description: this.$page.fees.description,
                     amount: this.$page.fees.amount,
                     method: this.$page.fees.method,
-                    client_id: this.$page.fees.client_id
+                    client_id: this.$page.fees.client_id,
+                    office_id: this.$page.fees.office_id
                 },
                 {
                     bag: "updateFees",
@@ -207,7 +245,9 @@ export default {
             ),
             deleteApiTokenForm: this.$inertia.form(),
             apiTokenBeingDeleted: null,
-            options: []
+            options: [],
+            methods: this.$page.methods,
+            descriptions: this.$page.descriptions
         };
     },
 
@@ -239,7 +279,34 @@ export default {
                     preserveScroll: true
                 })
                 .then(() => (window.location = this.$route("fees.index")));
+        },
+
+        createDescription(search) {
+            let vm = this;
+            axios.post('/configurations/create/paymentDescription', {
+                value: search
+            }).then((response) => {
+                let desc = response.data
+                this.descriptions.push(desc)
+                this.form.description=desc
+            })
+        },
+
+        createMethod(search) {
+            let vm = this;
+            axios.post('/configurations/create/paymentMethod', {
+                value: search
+            }).then((response) => {
+                let methods = response.data
+                this.methods.push(methods)
+                this.form.method=methods
+            })
         }
+    },
+
+    created() {
+        this.form.description = { id:1, value: this.$page.fees.description}
+        this.form.method = { id:1, value: this.$page.fees.method}
     }
 };
 </script>

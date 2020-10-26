@@ -10,6 +10,7 @@ import vueCountryRegionSelect from 'vue-country-region-select';
 import 'vue-search-select/dist/VueSearchSelect.css'
 import { Datetime } from 'vue-datetime'
 import 'vue-datetime/dist/vue-datetime.css'
+import Multiselect from 'vue-multiselect'
 
 Vue.use(InertiaApp);
 Vue.use(InertiaForm);
@@ -17,6 +18,8 @@ Vue.use(PortalVue);
 Vue.use(vueCountryRegionSelect);
 Vue.use(Datetime)
 Vue.component('datetime', Datetime);
+Vue.component('multiselect', Multiselect)
+
 
 const app = document.getElementById('app');
 

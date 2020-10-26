@@ -15,8 +15,7 @@
                     <model-select
                         :options="options"
                         v-model="form.client_id"
-                        placeholder="Search Client...."
-                    >
+                        placeholder="Search Client">
                     </model-select>
                 </div>
                 <jet-input-error
@@ -68,14 +67,20 @@
             </div>
             <div class="col-span-6 sm:col-span-4">
                 <jet-label for="description" value="Description" />
-                <jet-input
-                    id="description"
-                    type="text"
-                    class="mt-1 block w-full"
+
+                <multiselect
                     v-model="form.description"
-                    autocomplete="Description"
-                    placeholder="Admission Fees"
-                />
+                    :options="descriptions"
+                    :searchable="true"
+                    :close-on-select="true"
+                    :show-labels="true"
+                    :taggable="true"
+                    @tag="createDescription"
+                    :multiple="false"
+                    track-by="value"
+                    label="value"
+                    placeholder="Admission Fees" />
+
                 <jet-input-error
                     :message="form.error('description')"
                     class="mt-2"
@@ -84,14 +89,20 @@
 
             <div class="col-span-6 sm:col-span-4">
                 <jet-label for="method" value="Method" />
-                <jet-input
-                    id="method"
-                    type="text"
-                    class="mt-1 block w-full"
+
+                <multiselect
                     v-model="form.method"
-                    autocomplete="method"
-                    placeholder="Cash / Bank Transfer"
-                />
+                    :options="methods"
+                    :searchable="true"
+                    :close-on-select="true"
+                    :show-labels="true"
+                    :taggable="true"
+                    @tag="createMethod"
+                    :multiple="false"
+                    track-by="value"
+                    label="value"
+                    placeholder="Payment method" />
+
                 <jet-input-error :message="form.error('method')" class="mt-2" />
             </div>
         </template>
@@ -125,6 +136,8 @@ import JetLabel from "@/Jetstream/Label";
 import JetActionMessage from "@/Jetstream/ActionMessage";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton";
 import { ModelSelect } from "vue-search-select";
+import 'vue-multiselect/dist/vue-multiselect.min.css'
+const axios = require('axios')
 
 export default {
     components: {
@@ -158,7 +171,9 @@ export default {
                     resetOnSuccess: false
                 }
             ),
-            options: []
+            options: [],
+            methods: this.$page.methods,
+            descriptions: this.$page.descriptions
         };
     },
 
@@ -178,6 +193,26 @@ export default {
             this.form.post("/fees", {
                 preserveScroll: true
             });
+        },
+        createDescription(search) {
+            let vm = this;
+            axios.post('/configurations/create/paymentDescription', {
+                value: search
+            }).then((response) => {
+                let desc = response.data
+                this.descriptions.push(desc)
+                this.form.description=desc
+            })
+        },
+        createMethod(search) {
+            let vm = this;
+            axios.post('/configurations/create/paymentMethod', {
+                value: search
+            }).then((response) => {
+                let methods = response.data
+                this.methods.push(methods)
+                this.form.method=methods
+            })
         }
     }
 };
