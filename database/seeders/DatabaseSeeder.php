@@ -7,6 +7,7 @@ use App\Models\Description;
 use App\Models\Fees;
 use App\Models\Office;
 use App\Models\PaymentMethod;
+use App\Models\Setting;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\Seeder;
@@ -33,6 +34,11 @@ class DatabaseSeeder extends Seeder
 
         Description::factory(5)->create();
         PaymentMethod::factory(5)->create();
+
+        Setting::create([
+            'key' => 'email_invoice',
+            'value' => 'john@doe.com'
+        ]);
 
         Office::factory(50)->create()->each(function($office) {
 
