@@ -15,11 +15,21 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
         'users' => Controllers\UserController::class,
     ]);
 
+    # Invoice PDF
     Route::get('/invoice/fees/{id}', '\App\Http\Controllers\InvoiceController@show')->name('invoice.show');
 
-    Route::get('/generate/{id}', '\App\Http\Controllers\DashboardController@generate_export')->name('generate.invoice');
-    Route::get('/generatefees/{id}', '\App\Http\Controllers\FeesController@generate_fullexport')->name('generate.fullinvoice');
+    # Search
     Route::post('/searchdata', '\App\Http\Controllers\ClientController@tnt_searchData')->name('searchdata');
+
+    /*
+     * Exports
+     */
+    Route::name('exports.')->prefix('export')->group(function() {
+        Route::get('clients','\App\Http\Controllers\ExportController@clients')->name('clients');
+        Route::get('fees','\App\Http\Controllers\ExportController@fees')->name('fees');
+        Route::get('offices','\App\Http\Controllers\ExportController@offices')->name('offices');
+        Route::get('users','\App\Http\Controllers\ExportController@users')->name('users');
+    });
 
     /*
      * Site Configuration crud

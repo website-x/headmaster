@@ -7,7 +7,7 @@ use App\Models\Office;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Fees;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 use PDF;
 
@@ -52,9 +52,6 @@ class DashboardController extends Controller
             $office_data = $office_data;
         }
 
-
-
-
         return Inertia::render('Dashboard', [
             'clients_count' => $clients_count,
             'offices_count' => $offices_count,
@@ -62,52 +59,5 @@ class DashboardController extends Controller
             'office_data' => $office_data,
             'fees_data' => $fees_data
         ]);
-    }
-    public function generate_export($txt)
-    {
-        $role_name = auth()->user()->role;
-        $office_id = auth()->user()->office_id;
-        if (strtolower($role_name) == 'admin') {
-            $data = Fees::orderByDESC('created_at')->with(['client', 'collectedBy'])->get();
-        } else {
-            $data = Fees::whereHas('office', function (Builder $query) use ($office_id) {
-                $query->where('office_id', $office_id);
-            })
-                ->with(['client', 'collectedBy'])
-                ->orderBy('created_at','DESC')
-                ->get();
-        }
-        if (strtolower($txt) == 'csv') {
-            $fileName = 'invoices.csv';
-            $headers = array(
-                "Content-type"        => "text/csv",
-                "Content-Disposition" => "attachment; filename=$fileName",
-                "Pragma"              => "no-cache",
-                "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
-                "Expires"             => "0"
-            );
-            $columns = array('Invoice number', 'Date', 'Name', 'Amount');
-            $callback = function () use ($data, $columns) {
-                $file = fopen('php://output', 'w');
-                fputcsv($file, $columns);
-
-                foreach ($data as $data) {
-                    $row['Invoice number']  = $data->id;
-                    $row['Date']    = $data->last_created_at;
-                    $row['Name']    = $data->client->full_name;
-                    $row['Amount']  = $data->amount;
-
-
-                    fputcsv($file, array($row['Invoice number'], $row['Date'], $row['Name'], $row['Amount']));
-                }
-
-                fclose($file);
-            };
-
-            return response()->stream($callback, 200, $headers);
-        } else {
-            $pdf = PDF::loadView('pdf.payments', ['fees' => $data]);
-            return $pdf->stream('invoices.pdf');
-        }
     }
 }

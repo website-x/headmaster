@@ -3,8 +3,7 @@
 
         <inertia-link
             :href="$route('fees.create')"
-            class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-        >
+            class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
             Add Payment
         </inertia-link>
 
@@ -17,8 +16,8 @@
                 class="table-auto text-center"
                 :data="$page.office_data.data"
                 :links="$page.office_data.links"
-                :filters="dateFilter"
-            >
+                :filters="dateFilter">
+
                 <template slot="columns">
                     <th class="w-1/3 px-4 py-2">Office Name</th>
                     <th class="w-2/3 px-4 py-2">Today</th>
@@ -66,53 +65,12 @@
 
             <h1 class="text-2xl text-center">
                 Invoices
-                <a
-                    target="_new"
-                    :href="$route('generate.invoice', 'pdf')"
-                    class=" float-right "
-                >
-                    <svg
-                        class="inline w-5 h-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
-                        />
-                    </svg>
-                </a>
-                <a
-                    target="_new"
-                    :href="$route('generate.invoice', 'csv')"
-                    class=" float-right "
-                >
-                    <svg
-                        class="inline mr-5 w-5 h-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
-                        />
-                    </svg>
-                </a>
             </h1>
 
             <base-table
                 class="table-auto text-center"
                 :data="rowfilter"
-                :links="$page.fees_data.links"
-            >
+                :links="$page.fees_data.links">
                 <template slot="columns">
                     <th class="w-1/5 px-4 py-2">#</th>
                     <th class="w-2/5 px-4 py-2">Date</th>

@@ -170,6 +170,11 @@ class ClientController extends Controller
         return redirect()->route('clients.index');
     }
 
+    public function export()
+    {
+
+    }
+
     public function tnt_searchData(Request $request)
     {
         $office_id = auth()->user()->office_id;
