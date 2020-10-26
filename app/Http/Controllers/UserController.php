@@ -50,7 +50,7 @@ class UserController extends Controller
 
         $user->assignRole($request->role);
 
-        return redirect()->back();
+        return redirect()->route('users.index');
     }
 
     public function edit(User $user)
@@ -80,7 +80,7 @@ class UserController extends Controller
 
         $user->assignRole($request->role);
 
-        return redirect()->back();
+        return redirect()->route('users.index');
     }
 
     public function destroy(User $user)

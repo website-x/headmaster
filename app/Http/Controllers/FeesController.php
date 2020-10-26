@@ -100,7 +100,7 @@ class FeesController extends Controller
             'user_id' => auth()->user()->id,
         ]);
 
-        return redirect()->back();
+        return redirect()->route('fees.index');
     }
 
     public function destroy(Fees $fee)
@@ -109,6 +109,7 @@ class FeesController extends Controller
 
         return redirect()->route('fees.index');
     }
+
     public function generate_fullexport($txt)
     {
         $role_name = auth()->user()->role;

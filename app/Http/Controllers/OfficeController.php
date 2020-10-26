@@ -17,16 +17,12 @@ class OfficeController extends Controller
      */
     public function index()
     {
-        $role_name=auth()->user()->role;
-        $office_id = auth()->user()->office_id;
-        if (strtolower($role_name)=='admin') {
+        if ( auth()->user()->is_admin )
             $office_data = Office::paginate();
-        } else {
+         else
             $office_data = User::find(auth()->user()->id)->office()->paginate();
-        }
-       
+
         return Inertia::render('Offices/Index', [
-            //'offices' => Office::paginate()
             'offices' => $office_data
         ]);
     }
@@ -65,7 +61,7 @@ class OfficeController extends Controller
             'email' => $request->email ?? null,
         ]);
 
-        return redirect()->back();
+        return redirect()->route('offices.index');
     }
 
     /**
@@ -106,7 +102,7 @@ class OfficeController extends Controller
             'email' => $request->email ?? null,
         ]);
 
-        return redirect()->back();
+        return redirect()->route('offices.index');
     }
 
     /**

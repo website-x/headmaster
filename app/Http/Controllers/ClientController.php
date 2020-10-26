@@ -58,8 +58,6 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-
-
         Validator::make($request->all(), [
             'first_name' => ['required', 'string'],
             'last_name' => ['required', 'string'],
@@ -95,7 +93,7 @@ class ClientController extends Controller
             'user_id' => auth()->id()
         ]);
 
-        return redirect()->back();
+        return redirect()->route('clients.index');
     }
 
     /**
@@ -109,7 +107,6 @@ class ClientController extends Controller
         return Inertia::render('Clients/Edit', [
             'client' => $client->load('payments'),
             'offices' => Office::get(['id', 'name'])->toArray()
-
         ]);
     }
 
@@ -122,7 +119,6 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-
         Validator::make($request->all(), [
             'first_name' => ['required', 'string'],
             'last_name' => ['required', 'string'],
@@ -158,7 +154,7 @@ class ClientController extends Controller
             'user_id' => auth()->id()
         ]);
 
-        return redirect()->back();
+        return redirect()->route('clients.index');
     }
 
     /**
@@ -173,6 +169,7 @@ class ClientController extends Controller
 
         return redirect()->route('clients.index');
     }
+
     public function tnt_searchData(Request $request)
     {
         $office_id = auth()->user()->office_id;
@@ -205,14 +202,14 @@ class ClientController extends Controller
         }
         else if (strtolower($selectOption) == 'fees') {
             if (strtolower($role_name) == 'admin') {
-               
+
                 $DataSent = Fees::search($searchItem)->get();
-               
+
             } else {
                 $DataSent = Fees::search($searchItem)->where('office_id', $office_id)->get();
             }
         }
-        
+
      return response()->json($DataSent);
     }
 }

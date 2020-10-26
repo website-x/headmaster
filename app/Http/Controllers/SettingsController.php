@@ -33,6 +33,6 @@ class SettingsController extends Controller
             'value' => $request->input('value'),
         ]);
 
-        return redirect()->back();
+        return redirect()->route('settings.index');
     }
 }
