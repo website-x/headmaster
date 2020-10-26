@@ -35,7 +35,7 @@ class FeesController extends Controller
         }
 
         return Inertia::render('Fees/Index', [
-            'fees' => $fees_data
+            'fees_data' => $fees_data
         ]);
     }
 

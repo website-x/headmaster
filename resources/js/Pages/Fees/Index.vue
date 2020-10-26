@@ -21,20 +21,48 @@
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="mb-4">
-                    <inertia-link
-                        :href="$route('fees.create')"
-                        class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-                        Add Payment
-                    </inertia-link>
-                </div>
 
-                <div
-                    class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-3">
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-3">
+                    <br>
+                    <div class="float-left">
+                        <a v-on:click="calenderOpen">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                class="inline w-8 h-8 float-left">
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                />
+                            </svg>
+                        </a>
+                        <datetime
+                            v-model="dateFilter"
+                            type="date"
+                            input-style="width:1px;"
+                            format="dd-LLL-yyyy"
+                            input-id="calender_date"
+                        ></datetime>
+                    </div>
+
+                    <div class="float-right">
+                        <inertia-link
+                            :href="$route('fees.create')"
+                            class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                            Add Payment
+                        </inertia-link>
+                    </div>
+
+                    <br>
+
                     <base-table
                         class="table-auto text-center"
-                        :data="$page.fees.data"
-                        :links="$page.fees.links"
+                        :data="rowfilter"
+                        :links="$page.fees_data.links"
                     >
                         <template slot="columns">
                             <th class="px-4 py-2">Id</th>
@@ -122,6 +150,41 @@ export default {
     components: {
         "base-table": BaseTable,
         AppLayout
+    },
+
+    data() {
+        return {
+            dateFilterShow: "",
+            dateFilter: ""
+        };
+    },
+    computed: {
+        rowfilter: function() {
+            //console.log(this.dateFilter)
+            return this.$page.fees_data.data.filter(row => {
+                return row.last_created_at.match(this.dateFilter);
+            });
+        }
+    },
+    methods:{
+        calenderOpen(){
+            document.getElementById('calender_date').focus();
+        }
+    },
+    watch: {
+        dateFilter: function() {
+            if (this.dateFilter != "") {
+                var d = new Date(this.dateFilter);
+                let month = d.toLocaleString("default", { month: "short" });
+                let year = d.toLocaleString("default", { year: "numeric" });
+                let day = d.toLocaleString("default", { day: "numeric" });
+                if (day.length < 2) {
+                    day = "0" + day;
+                }
+                let final_date = day + "-" + month + "-" + year;
+                this.dateFilter = final_date;
+            }
+        }
     }
 };
 </script>

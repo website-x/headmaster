@@ -68,16 +68,9 @@ class ClientController extends Controller
             'state' => ['required', 'string'],
             'country' => ['required', 'string'],
             'phone' => ['required', 'unique:clients']
-        ])->validateWithBag('createClient');
-
-        if (strtolower(auth()->user()->role) == 'admin' || (strtolower(auth()->user()->role) == 'employee'  && auth()->user()->office_id == null)) {
-            Validator::make($request->all(), [
-                'office_id' => ['required'],
-            ])->validateWithBag('createClient');
-            $office_id = $request->office_id;
-        } else {
-            $office_id = auth()->user()->office_id;
-        }
+        ])->sometimes('office_id','required',function($input){
+            return auth()->user()->is_admin === true;
+        })->validateWithBag('createClient');
 
         Client::create([
             'first_name' => $request->first_name,
@@ -89,7 +82,7 @@ class ClientController extends Controller
             'state' => $request->state,
             'country' => $request->country,
             'phone' => $request->phone,
-            'office_id' => $office_id,
+            'office_id' => auth()->user()->is_admin === true ? $request->office_id : auth()->user()->office->id,
             'user_id' => auth()->id()
         ]);
 
@@ -168,11 +161,6 @@ class ClientController extends Controller
         $client->delete();
 
         return redirect()->route('clients.index');
-    }
-
-    public function export()
-    {
-
     }
 
     public function tnt_searchData(Request $request)
