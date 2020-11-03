@@ -38,7 +38,6 @@
             </base-table>
         </div>
 
-        <!-- Invoices Card-->
         <div class="p-6 shadow-xl sm:px-20 bg-white border-b border-gray-200 px-4 py-2 mt-5 rounded-lg">
             <a v-on:click="calenderOpen">
                 <svg
@@ -102,8 +101,7 @@
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
                                 viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
+                                stroke="currentColor">
                                 <path
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
@@ -138,7 +136,6 @@ export default {
     },
     computed: {
         rowfilter: function() {
-            //console.log(this.dateFilter)
             return this.$page.fees_data.data.filter(row => {
                 return row.last_created_at.match(this.dateFilter);
             });
