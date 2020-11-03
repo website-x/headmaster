@@ -15,3 +15,14 @@ Run static analysis by
 ```
 ./vendor/bin/phpstan analyse app
 ```
+
+#### Screens
+![Image](./public/images/1.png)
+
+---
+
+![Image](./public/images/2.png)
+
+---
+
+![Image](./public/images/3.png)
