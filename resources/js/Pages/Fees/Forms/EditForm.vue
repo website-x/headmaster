@@ -123,6 +123,13 @@
                         label="value"
                         placeholder="Payment method" />
 
+                    <jet-input
+                        class="form-input block w-full pr-12 mt-2 sm:text-sm sm:leading-5"
+                        v-model="form.method_remarks"
+                        :placeholder="method_remark_helper"
+                        v-if="method_remark_helper != null"
+                    />
+
                     <jet-input-error
                         :message="form.error('method')"
                         class="mt-2"
@@ -223,9 +230,11 @@ export default {
         JetConfirmationModal,
         ModelSelect
     },
+
     mounted() {
         this.filloptions();
     },
+
     data() {
         return {
             form: this.$inertia.form(
@@ -235,6 +244,7 @@ export default {
                     description: this.$page.fees.description,
                     amount: this.$page.fees.amount,
                     method: this.$page.fees.method,
+                    method_remarks:this.$page.fees.method_remarks,
                     client_id: this.$page.fees.client_id,
                     office_id: this.$page.fees.office_id
                 },
@@ -247,8 +257,20 @@ export default {
             apiTokenBeingDeleted: null,
             options: [],
             methods: this.$page.methods,
-            descriptions: this.$page.descriptions
+            descriptions: this.$page.descriptions,
+            method_remark_helper:null
         };
+    },
+
+    watch: {
+        'form.method': function(newVAL, oldVAL) {
+            if (newVAL.value === 'Cash' || newVAL.value === 'Other' ) {
+                this.method_remark_helper = null
+            } else {
+                // to reset the visibilty
+                this.method_remark_helper = newVAL.value + ' Reference Number'
+            }
+        }
     },
 
     methods: {

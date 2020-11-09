@@ -22,7 +22,7 @@ class PaymentMethodFactory extends Factory
     public function definition()
     {
         return [
-            'value' => $this->faker->word
+            'value' => $this->faker->randomElement(['Cash','Cheque','NEFT','IMPS','RTGS','Wallets','Other'])
         ];
     }
 }

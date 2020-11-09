@@ -33,7 +33,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Description::factory(5)->create();
-        PaymentMethod::factory(5)->create();
+
+        foreach(['Cash', 'Cheque', 'NEFT', 'IMPS', 'RTGS', 'Wallet', 'Other'] as $method) {
+            PaymentMethod::create(['value' => $method]);
+        }
 
         Setting::create([
             'key' => 'email_invoice',

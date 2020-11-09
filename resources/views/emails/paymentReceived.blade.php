@@ -163,6 +163,9 @@
             <td>
                 {{ $fees->description }}<br>
                 <small>{{ $fees->method }}</small>
+                @if($fees->method_remarks != null)
+                    <small>({{ $fees->method_remarks }})</small>
+                @endif
             </td>
 
             <td>

@@ -71,17 +71,13 @@
                 :data="rowfilter"
                 :links="$page.fees_data.links">
                 <template slot="columns">
-                    <th class="w-1/5 px-4 py-2">#</th>
-                    <th class="w-2/5 px-4 py-2">Date</th>
-                    <th class="w-3/5 px-4 py-2">Name</th>
-                    <th class="w-4/5 px-4 py-2">Amount</th>
-                    <th class="w-5/5 px-4 py-2">Collected By</th>
+                    <th class="w-1/5 px-4 py-2">Date</th>
+                    <th class="w-2/5 px-4 py-2">Name</th>
+                    <th class="w-3/5 px-4 py-2">Amount</th>
+                    <th class="w-4/5 px-4 py-2">Collected By</th>
                 </template>
 
                 <template slot-scope="{ row }">
-                    <td class="border px-4 py-2">
-                        {{ row.id }}
-                    </td>
                     <td class="border px-4 py-2">
                         {{ row.last_created_at }}
                     </td>

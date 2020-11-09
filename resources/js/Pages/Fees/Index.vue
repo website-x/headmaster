@@ -22,42 +22,38 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
+                <div class="mb-4">
+                    <inertia-link
+                        :href="$route('fees.create')"
+                        class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                        Add Payment
+                    </inertia-link>
+                </div>
+
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-3">
-                    <br>
-                    <div class="float-left">
-                        <a v-on:click="calenderOpen">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                class="inline w-8 h-8 float-left">
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                                />
-                            </svg>
-                        </a>
-                        <datetime
-                            v-model="dateFilter"
-                            type="date"
-                            input-style="width:1px;"
-                            format="dd-LLL-yyyy"
-                            input-id="calender_date"
-                        ></datetime>
-                    </div>
+                    <a v-on:click="calenderOpen">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            class="inline w-8 h-8 float-left">
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                            />
+                        </svg>
+                    </a>
+                    <datetime
+                        v-model="dateFilter"
+                        type="date"
+                        input-style="width:1px;"
+                        format="dd-LLL-yyyy"
+                        input-id="calender_date"
+                    ></datetime>
 
-                    <div class="float-right">
-                        <inertia-link
-                            :href="$route('fees.create')"
-                            class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-                            Add Payment
-                        </inertia-link>
-                    </div>
-
-                    <br>
 
                     <base-table
                         class="table-auto text-center"
@@ -98,6 +94,9 @@
                                 <br />
                                 <small>
                                     {{ row.method }}
+                                </small>
+                                <small v-if="row.method_remarks != null">
+                                    {{ row.method_remarks }}
                                 </small>
                             </td>
 

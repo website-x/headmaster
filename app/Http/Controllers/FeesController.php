@@ -66,6 +66,7 @@ class FeesController extends Controller
             'description' => optional($request->description)['value'] ?? null,
             'amount' => $request->amount,
             'method' => optional($request->get('method'))['value'] ?? null,
+            'method_remarks' => $request->get('method_remarks') ?? null,
             'client_id' => $request->client_id,
             'office_id' => auth()->user()->is_admin === true ? $request->office_id : auth()->user()->office->id,
             'user_id' => auth()->user()->id,

@@ -118,7 +118,7 @@
                 <table>
                     <tr>
                         <td class="title">
-                            <img src="{{ asset('/images/logo.png') }}" style="width:100%; max-width:300px;">
+                            <img src="{{ asset('/images/logo.png') }}" style="width:100%; max-width:50px;">
                         </td>
 
                         <td>
@@ -163,6 +163,9 @@
             <td>
                 {{ $fees->description }}<br>
                 <small>{{ $fees->method }}</small>
+                @if($fees->method_remarks != null)
+                    <small>({{ $fees->method_remarks }})</small>
+                @endif
             </td>
 
             <td>

@@ -78,8 +78,7 @@
                     @tag="createDescription"
                     :multiple="false"
                     track-by="value"
-                    label="value"
-                    placeholder="Admission Fees" />
+                    label="value" />
 
                 <jet-input-error
                     :message="form.error('description')"
@@ -102,6 +101,13 @@
                     track-by="value"
                     label="value"
                     placeholder="Payment method" />
+
+                <jet-input
+                    class="form-input block w-full pr-12 mt-2 sm:text-sm sm:leading-5"
+                    v-model="form.method_remarks"
+                    :placeholder="method_remark_helper"
+                    v-if="method_remark_helper != null"
+                />
 
                 <jet-input-error :message="form.error('method')" class="mt-2" />
             </div>
@@ -163,6 +169,7 @@ export default {
                     description: null,
                     amount: null,
                     method: null,
+                    method_remarks:null,
                     client_id: null,
                     office_id: null
                 },
@@ -173,8 +180,20 @@ export default {
             ),
             options: [],
             methods: this.$page.methods,
-            descriptions: this.$page.descriptions
+            descriptions: this.$page.descriptions,
+            method_remark_helper:null
         };
+    },
+
+    watch: {
+        'form.method': function(newVAL, oldVAL) {
+            if (newVAL.value === 'Cash' || newVAL.value === 'Other' ) {
+                this.method_remark_helper = null
+            } else {
+                // to reset the visibilty
+                this.method_remark_helper = newVAL.value + ' Reference Number'
+            }
+        }
     },
 
     methods: {

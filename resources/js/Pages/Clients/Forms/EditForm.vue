@@ -15,9 +15,10 @@
                     <jet-input
                         id="first_name"
                         type="text"
-                        class="mt-1 block w-full"
+                        class="mt-1 block w-full disabled:opacity-75"
                         v-model="form.first_name"
                         autocomplete="first_name"
+                        disabled="disabled"
                     />
                     <jet-input-error
                         :message="form.error('first_name')"
@@ -30,9 +31,10 @@
                     <jet-input
                         id="last_name"
                         type="text"
-                        class="mt-1 block w-full"
+                        class="mt-1 block w-full disabled:opacity-75"
                         v-model="form.last_name"
                         autocomplete="last_name"
+                        disabled="disabled"
                     />
                     <jet-input-error
                         :message="form.error('last_name')"
@@ -48,9 +50,10 @@
                     <jet-input
                         id="father_first_name"
                         type="text"
-                        class="mt-1 block w-full"
+                        class="mt-1 block w-full disabled:opacity-75"
                         v-model="form.father_first_name"
                         autocomplete="father_first_name"
+                        disabled="disabled"
                     />
                     <jet-input-error
                         :message="form.error('father_first_name')"
@@ -66,9 +69,10 @@
                     <jet-input
                         id="father_last_name"
                         type="text"
-                        class="mt-1 block w-full"
+                        class="mt-1 block w-full disabled:opacity-75"
                         v-model="form.father_last_name"
                         autocomplete="father_last_name"
+                        disabled="disabled"
                     />
                     <jet-input-error
                         :message="form.error('father_last_name')"

@@ -18,6 +18,7 @@ class CreateFeesTable extends Migration
             $table->string('description')->nullable();
             $table->double('amount');
             $table->string('method')->nullable();
+            $table->string('method_remarks')->nullable();
 
             $table->foreignId('client_id')->constrained();
             $table->foreignId('office_id')->constrained();
