@@ -8,8 +8,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
 use Laravel\Scout\Searchable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
@@ -39,7 +39,7 @@ class User extends Authenticatable
         'remember_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
-        'user_since'
+        'user_since',
     ];
 
     /**
@@ -62,7 +62,7 @@ class User extends Authenticatable
         'is_admin',
         'office_name',
         'since',
-        'permissions'
+        'permissions',
     ];
 
     public function client()
@@ -102,13 +102,14 @@ class User extends Authenticatable
     {
         return $this->getPermissionsViaRoles()->pluck('name');
     }
+
     public function searchableAs()
     {
         return 'users_index';
     }
+
     public function toSearchableArray()
     {
-
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -116,5 +117,4 @@ class User extends Authenticatable
 
         ];
     }
-
 }

@@ -11,8 +11,8 @@ class ClientExport implements FromCollection
     use Exportable;
 
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function collection()
     {
         return Client::all();

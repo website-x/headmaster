@@ -9,8 +9,8 @@ use App\Models\Office;
 use App\Models\PaymentMethod;
 use App\Models\Setting;
 use App\Models\User;
-use Spatie\Permission\Models\Role;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -29,21 +29,21 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            RolesAndPermissionsSeeder::class
+            RolesAndPermissionsSeeder::class,
         ]);
 
         Description::factory(5)->create();
 
-        foreach(['Cash', 'Cheque', 'NEFT', 'IMPS', 'RTGS', 'Wallet', 'Other'] as $method) {
+        foreach (['Cash', 'Cheque', 'NEFT', 'IMPS', 'RTGS', 'Wallet', 'Other'] as $method) {
             PaymentMethod::create(['value' => $method]);
         }
 
         Setting::create([
             'key' => 'email_invoice',
-            'value' => 'john@doe.com'
+            'value' => 'john@doe.com',
         ]);
 
-        Office::factory(50)->create()->each(function($office) {
+        Office::factory(50)->create()->each(function ($office) {
 
             // Create a user for each office
             $user = (User::factory(1)->make())->first();

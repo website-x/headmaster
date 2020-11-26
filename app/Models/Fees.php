@@ -10,10 +10,9 @@ use Laravel\Scout\Searchable;
 class Fees extends Model
 {
     use HasFactory, SoftDeletes;
-
     use Searchable;
 
-    protected $appends = ['last_updated_at','last_created_at'];
+    protected $appends = ['last_updated_at', 'last_created_at'];
 
     public function client()
     {

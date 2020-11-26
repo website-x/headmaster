@@ -22,7 +22,7 @@ class DescriptionFactory extends Factory
     public function definition()
     {
         return [
-            'value' => $this->faker->word
+            'value' => $this->faker->word,
         ];
     }
 }

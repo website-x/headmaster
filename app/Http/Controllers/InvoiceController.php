@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fees;
-use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
 class InvoiceController extends Controller
@@ -12,12 +12,13 @@ class InvoiceController extends Controller
     public function show($id)
     {
         $pdf = PDF::loadView('layouts.invoice', [
-            'fees' => Fees::findOrFail($id)
+            'fees' => Fees::findOrFail($id),
         ]);
 
-        if(App::environment() == 'production')
+        if (App::environment() == 'production') {
             return $pdf->download();
-        else
+        } else {
             return $pdf->stream();
+        }
     }
 }

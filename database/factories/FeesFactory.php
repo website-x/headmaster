@@ -25,8 +25,8 @@ class FeesFactory extends Factory
         return [
             'description' => $this->faker->sentence,
             'amount' => $this->faker->randomFloat(2),
-            'method' => $this->faker->randomElement(['Cash','Bank Transfer']),
-            'method_remarks' => $this->faker->randomElement(['LB855855','BNETSDSD','5456SDEETE'])
+            'method' => $this->faker->randomElement(['Cash', 'Bank Transfer']),
+            'method_remarks' => $this->faker->randomElement(['LB855855', 'BNETSDSD', '5456SDEETE']),
         ];
     }
 }

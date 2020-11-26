@@ -6,15 +6,15 @@ use App\Mail\PaymentReceived;
 use App\Models\Client;
 use App\Models\Description;
 use App\Models\Fees;
+use App\Models\Office;
 use App\Models\PaymentMethod;
 use App\Models\Setting;
 use App\Models\User;
-use App\Models\Office;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Database\Eloquent\Builder;
+use Inertia\Inertia;
 use PDF;
 
 class FeesController extends Controller
@@ -32,12 +32,12 @@ class FeesController extends Controller
                 $query->where('office_id', $office_id);
             })
                 ->with(['client', 'collectedBy', 'office'])
-                ->orderBy('created_at','DESC')
+                ->orderBy('created_at', 'DESC')
                 ->paginate();
         }
 
         return Inertia::render('Fees/Index', [
-            'fees_data' => $fees_data
+            'fees_data' => $fees_data,
         ]);
     }
 
@@ -58,7 +58,7 @@ class FeesController extends Controller
             'client_id' => 'required|numeric',
             'description' => 'required',
             'method' => 'required',
-        ])->sometimes('office_id','required',function($input){
+        ])->sometimes('office_id', 'required', function ($input) {
             return auth()->user()->is_admin;
         })->validateWithBag('createFees');
 
@@ -75,7 +75,7 @@ class FeesController extends Controller
         try {
             Mail::to(Setting::find('email_invoice')->value)
                 ->send(new PaymentReceived($fees));
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             report($e);
         }
 
@@ -100,7 +100,7 @@ class FeesController extends Controller
             'client_id' => ['required', 'numeric'],
             'description' => 'required',
             'method' => 'required',
-        ])->sometimes('office_id','required',function($input){
+        ])->sometimes('office_id', 'required', function ($input) {
             return auth()->user()->is_admin;
         })->validateWithBag('updateFees');
 

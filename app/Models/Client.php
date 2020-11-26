@@ -12,7 +12,7 @@ class Client extends Model
     use HasFactory, SoftDeletes;
     use Searchable;
 
-    protected $appends = ['full_name','father_full_name','full_address','total_payments'];
+    protected $appends = ['full_name', 'father_full_name', 'full_address', 'total_payments'];
 
     public function office()
     {
@@ -41,17 +41,19 @@ class Client extends Model
 
     public function getTotalPaymentsAttribute()
     {
-        return '₹' . number_format($this->payments->sum('amount'),  2, '.' , ',' );
+        return '₹'.number_format($this->payments->sum('amount'), 2, '.', ',');
     }
 
     public function getFullAddressAttribute()
     {
         return "{$this->address} {$this->city} {$this->state} {$this->country}";
     }
+
     public function searchableAs()
     {
         return 'clients_index';
     }
+
     public function toSearchableArray()
     {
         /* $array = $this->toArray();
@@ -71,8 +73,6 @@ class Client extends Model
             'country' => $this->country,
             'phone' => $this->phone,
 
-           
         ];
     }
-    
 }

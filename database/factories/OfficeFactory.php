@@ -29,7 +29,7 @@ class OfficeFactory extends Factory
             'state' => $this->faker->state,
             'country' => $this->faker->country,
             'phone' => $this->faker->phoneNumber,
-            'email' => $this->faker->companyEmail
+            'email' => $this->faker->companyEmail,
         ];
     }
 }

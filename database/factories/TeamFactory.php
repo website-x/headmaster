@@ -25,7 +25,7 @@ class TeamFactory extends Factory
         return [
             'user_id' => 1,
             'name' => "Shreyansh \'s Team",
-            'personal_team' => 1
+            'personal_team' => 1,
         ];
     }
 }

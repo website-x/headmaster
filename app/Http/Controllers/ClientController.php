@@ -3,23 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
-use App\Models\Office;
 use App\Models\Fees;
+use App\Models\Office;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
-use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
 
 class ClientController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
     public function index()
     {
         $office_id = auth()->user()->office_id;
@@ -33,8 +31,9 @@ class ClientController extends Controller
                 ->with(['office', 'createdBy'])
                 ->paginate();
         }
+
         return Inertia::render('Clients/Index', [
-            'clients' => $clients
+            'clients' => $clients,
         ]);
     }
 
@@ -46,7 +45,7 @@ class ClientController extends Controller
     public function create()
     {
         return Inertia::render('Clients/Create', [
-            'offices' => Office::get(['id', 'name'])->toArray()
+            'offices' => Office::get(['id', 'name'])->toArray(),
         ]);
     }
 
@@ -67,8 +66,8 @@ class ClientController extends Controller
             'city' => ['required', 'string'],
             'state' => ['required', 'string'],
             'country' => ['required', 'string'],
-            'phone' => ['required', 'unique:clients']
-        ])->sometimes('office_id','required',function($input){
+            'phone' => ['required', 'unique:clients'],
+        ])->sometimes('office_id', 'required', function ($input) {
             return auth()->user()->is_admin === true;
         })->validateWithBag('createClient');
 
@@ -83,7 +82,7 @@ class ClientController extends Controller
             'country' => $request->country,
             'phone' => $request->phone,
             'office_id' => auth()->user()->is_admin === true ? $request->office_id : auth()->user()->office->id,
-            'user_id' => auth()->id()
+            'user_id' => auth()->id(),
         ]);
 
         return redirect()->route('clients.index');
@@ -99,7 +98,7 @@ class ClientController extends Controller
     {
         return Inertia::render('Clients/Edit', [
             'client' => $client->load('payments'),
-            'offices' => Office::get(['id', 'name'])->toArray()
+            'offices' => Office::get(['id', 'name'])->toArray(),
         ]);
     }
 
@@ -117,10 +116,10 @@ class ClientController extends Controller
             'city' => ['required', 'string'],
             'state' => ['required', 'string'],
             'country' => ['required', 'string'],
-            'phone' => ['required', "unique:clients,phone,{$client->id}",]
+            'phone' => ['required', "unique:clients,phone,{$client->id}"],
         ])->validateWithBag('updateClient');
 
-        if (strtolower(auth()->user()->role) == 'admin' || (strtolower(auth()->user()->role) == 'employee'  && auth()->user()->office_id == null)) {
+        if (strtolower(auth()->user()->role) == 'admin' || (strtolower(auth()->user()->role) == 'employee' && auth()->user()->office_id == null)) {
             Validator::make($request->all(), [
                 'office_id' => ['required'],
             ])->validateWithBag('createClient');
@@ -136,7 +135,7 @@ class ClientController extends Controller
             'country' => $request->country,
             'phone' => $request->phone,
             'office_id' => $office_id,
-            'user_id' => auth()->id()
+            'user_id' => auth()->id(),
         ]);
 
         return redirect()->route('clients.index');
@@ -161,40 +160,35 @@ class ClientController extends Controller
         $role_name = auth()->user()->role;
         $user_id = auth()->user()->id;
 
-        $selectOption = !empty($request->selectOption) ? $request->selectOption : '';
-        $searchItem = !empty($request->searchItem) ? $request->searchItem : '';
-        $DataSent=array();
+        $selectOption = ! empty($request->selectOption) ? $request->selectOption : '';
+        $searchItem = ! empty($request->searchItem) ? $request->searchItem : '';
+        $DataSent = [];
         if (strtolower($selectOption) == 'clients') {
             if (strtolower($role_name) == 'admin') {
                 $DataSent = Client::search($searchItem)->get();
             } else {
                 $DataSent = Client::search($searchItem)->where('office_id', $office_id)->get();
             }
-        }
-        else if (strtolower($selectOption) == 'users') {
+        } elseif (strtolower($selectOption) == 'users') {
             if (strtolower($role_name) == 'admin') {
                 $DataSent = User::search($searchItem)->get();
             } else {
                 $DataSent = User::search($searchItem)->where('id', $user_id)->get();
             }
-        }
-        else if (strtolower($selectOption) == 'offices') {
+        } elseif (strtolower($selectOption) == 'offices') {
             if (strtolower($role_name) == 'admin') {
                 $DataSent = Office::search($searchItem)->get();
             } else {
                 $DataSent = Office::search($searchItem)->where('office_id', $office_id)->get();
             }
-        }
-        else if (strtolower($selectOption) == 'fees') {
+        } elseif (strtolower($selectOption) == 'fees') {
             if (strtolower($role_name) == 'admin') {
-
                 $DataSent = Fees::search($searchItem)->get();
-
             } else {
                 $DataSent = Fees::search($searchItem)->where('office_id', $office_id)->get();
             }
         }
 
-     return response()->json($DataSent);
+        return response()->json($DataSent);
     }
 }

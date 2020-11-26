@@ -2,25 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Office;
-use Inertia\Inertia;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $role_name=User::find(auth()->user()->id)->role;
-        if (strtolower($role_name)=='admin') {
+        $role_name = User::find(auth()->user()->id)->role;
+        if (strtolower($role_name) == 'admin') {
             $user_data = User::where('id', '!=', auth()->id())->orderByDesc('created_at')->paginate();
         } else {
             $user_data = User::where('id', '=', auth()->id())->orderByDesc('created_at')->paginate();
         }
+
         return Inertia::render('Users/Index', [
-            'users' => $user_data
+            'users' => $user_data,
         ]);
     }
 
@@ -28,7 +29,7 @@ class UserController extends Controller
     {
         return Inertia::render('Users/Create', [
             'offices' => Office::get(['id', 'name'])->pluck('name', 'id')->toArray(),
-            'roles' => Role::get('name')->pluck('name')->toArray()
+            'roles' => Role::get('name')->pluck('name')->toArray(),
         ]);
     }
 
@@ -45,7 +46,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'office_id' => $request->office_id ?? null
+            'office_id' => $request->office_id ?? null,
         ]);
 
         $user->assignRole($request->role);
@@ -58,7 +59,7 @@ class UserController extends Controller
         return Inertia::render('Users/Edit', [
             'user' => $user,
             'offices' => Office::get(['id', 'name'])->pluck('name', 'id')->toArray(),
-            'roles' => Role::get('name')->pluck('name')->toArray()
+            'roles' => Role::get('name')->pluck('name')->toArray(),
         ]);
     }
 
@@ -73,7 +74,7 @@ class UserController extends Controller
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
-            'office_id' => $request->office_id ?? null
+            'office_id' => $request->office_id ?? null,
         ]);
 
         $user->removeRole($user->role);

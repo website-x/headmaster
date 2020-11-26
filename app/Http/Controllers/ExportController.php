@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ClientExport;
 use App\Exports\FeesExport;
 use App\Exports\OfficeExport;
 use App\Exports\UserExport;
-use App\Exports\ClientExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ExportController extends Controller

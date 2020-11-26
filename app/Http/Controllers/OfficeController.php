@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Office;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Validator;
+use Inertia\Inertia;
 
 class OfficeController extends Controller
 {
@@ -17,13 +17,14 @@ class OfficeController extends Controller
      */
     public function index()
     {
-        if ( auth()->user()->is_admin )
+        if (auth()->user()->is_admin) {
             $office_data = Office::paginate();
-         else
+        } else {
             $office_data = User::find(auth()->user()->id)->office()->paginate();
+        }
 
         return Inertia::render('Offices/Index', [
-            'offices' => $office_data
+            'offices' => $office_data,
         ]);
     }
 
@@ -48,7 +49,7 @@ class OfficeController extends Controller
         Validator::make($request->all(), [
             'name' => ['required', 'string'],
             'address' => ['nullable', 'unique:offices,address'],
-            'phone' => ['nullable', 'unique:offices,phone']
+            'phone' => ['nullable', 'unique:offices,phone'],
         ])->validateWithBag('createOffice');
 
         Office::create([
@@ -73,7 +74,7 @@ class OfficeController extends Controller
     public function edit(Office $office)
     {
         return Inertia::render('Offices/Edit', [
-            'office' => $office->load('employees')
+            'office' => $office->load('employees'),
         ]);
     }
 

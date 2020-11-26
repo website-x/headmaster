@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Fees;
 use App\Models\Office;
 use App\Models\User;
-use Inertia\Inertia;
-use App\Models\Fees;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 use PDF;
 
 class DashboardController extends Controller
@@ -19,7 +19,7 @@ class DashboardController extends Controller
 
         $user = auth()->user();
 
-        if ( auth()->user()->is_admin ) {
+        if (auth()->user()->is_admin) {
             $condition = '!=';
             $office_id = 0;
             $fees_data = Fees::with(['client', 'collectedBy'])->orderByDESC('created_at')->paginate();
@@ -29,7 +29,7 @@ class DashboardController extends Controller
                 $query->where('office_id', $office_id);
             })
                 ->with(['client', 'collectedBy'])
-                ->orderBy('created_at','DESC')
+                ->orderBy('created_at', 'DESC')
                 ->paginate();
         }
 
@@ -40,13 +40,13 @@ class DashboardController extends Controller
             ->groupBy('offices.id')
             ->paginate();
 
-        if ( auth()->user()->is_admin ) {
+        if (auth()->user()->is_admin) {
             $clients_count = Client::count();
             $offices_count = Office::count();
             $employees_count = User::count();
             $office_data = $office_data;
         } else {
-            $clients_count = !empty($user->office()->count()) ? $user->office->clients()->count() : 0;
+            $clients_count = ! empty($user->office()->count()) ? $user->office->clients()->count() : 0;
             $offices_count = $user->office()->count();
             $employees_count = User::where('id', '=', $user->id)->count();
             $office_data = $office_data;
@@ -57,7 +57,7 @@ class DashboardController extends Controller
             'offices_count' => $offices_count,
             'employees_count' => $employees_count,
             'office_data' => $office_data,
-            'fees_data' => $fees_data
+            'fees_data' => $fees_data,
         ]);
     }
 }
