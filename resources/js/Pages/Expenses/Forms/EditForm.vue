@@ -112,11 +112,6 @@
             </template>
 
             <template #actions>
-                <a :href="$route('invoice.show', $page.expense.id)" target="_new"
-                class="mr-3 inline-flex items-center px-4 py-2 bg-white hover:bg-gray-100 text-gray-800 border border-transparent rounded-md font-semibold text-xs uppercase tracking-widest focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out border border-gray-300 rounded">
-                    Download Invoice
-                </a>
-
                 <jet-action-message :on="form.recentlySuccessful" class="mr-3">
                     Updated
                 </jet-action-message>
