@@ -10,7 +10,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="py-2 px-5 ">
+                <div class="py-2 px-5">
                     <div class="group relative sidebar-item with-children">
                         <jet-nav-link
                             href="/dashboard"
@@ -21,7 +21,7 @@
                         </jet-nav-link>
                     </div>
                 </div>
-                <div class="py-2 px-5 ">
+                <div class="py-2 px-5">
                     <div class="group relative sidebar-item with-children">
                         <jet-nav-link
                             href="/clients"
@@ -32,7 +32,18 @@
                         </jet-nav-link>
                     </div>
                 </div>
-                <div class="py-2 px-5 ">
+                <div class="py-2 px-5">
+                    <div class="group relative sidebar-item with-children">
+                        <jet-nav-link
+                            href="/expenses"
+                            class="block xl:flex xl:items-center text-center xl:text-left shadow-light xl:shadow-none py-6 xl:py-2 xl:px-4"
+                            :active="$page.currentRouteName == 'expenses.index'"
+                        >
+                            Expenses
+                        </jet-nav-link>
+                    </div>
+                </div>
+                <div class="py-2 px-5">
                     <div class="group relative sidebar-item with-children">
                         <jet-nav-link
                             href="/fees"
@@ -43,7 +54,7 @@
                         </jet-nav-link>
                     </div>
                 </div>
-                <div class="py-2 px-5 ">
+                <div class="py-2 px-5">
                     <div class="group relative sidebar-item with-children">
 
                         <jet-nav-link

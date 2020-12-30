@@ -13,6 +13,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         'fees' => Controllers\FeesController::class,
         'offices' => Controllers\OfficeController::class,
         'users' => Controllers\UserController::class,
+        'expenses' => Controllers\ExpenseController::class,
     ]);
 
     // Invoice PDF

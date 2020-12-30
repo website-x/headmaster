@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Client;
 use App\Models\Description;
+use App\Models\Expense;
 use App\Models\Fees;
 use App\Models\Office;
 use App\Models\PaymentMethod;
@@ -63,6 +64,11 @@ class DatabaseSeeder extends Seeder
             $fee->office()->associate($office);
             $fee->collectedBy()->associate(User::inRandomOrder()->first());
             $fee->save();
+
+            $expense = (Expense::factory(1)->make())->first();
+            $expense->client()->associate($client);
+            $expense->spentBy()->associate(User::inRandomOrder()->first());
+            $expense->save();
         });
     }
 }
