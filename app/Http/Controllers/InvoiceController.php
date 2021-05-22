@@ -11,9 +11,6 @@ class InvoiceController extends Controller
 {
     public function show($id)
     {
-        return view('layouts.invoice', [
-            'fees' => Fees::findOrFail($id),
-        ]);
         $pdf = PDF::loadView('layouts.invoice', [
             'fees' => Fees::findOrFail($id),
         ]);
