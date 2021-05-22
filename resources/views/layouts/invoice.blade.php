@@ -231,12 +231,12 @@
                 </span>
             </td>
             <td class="sb-highlighted"><span>Discount</span></td>
-            <td>&#8377;0</td>
+            <td><span>&#8377;</span>0</td>
         </tr>
         <tr>
             <td colspan="3"></td>
             <td class="sb-highlighted"><span>Penalty</span></td>
-            <td>&#8377;0</td>
+            <td><span>&#8377;</span>0</td>
         </tr>
 
         <tr class="total">
