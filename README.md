@@ -9,6 +9,7 @@ The goal of this application is to provide a guide to how we can make a CRM syst
 - `cp .env.example .env`
 - Update database configuration in the `.env` file
 - `php artisan migrate`
+- `php artisan db:seed`
 - Install npm dependency with yarn. `yarn install`
 - Run yarn script to generate javascript files, `yarn run prod` or `yarn run dev`
 
