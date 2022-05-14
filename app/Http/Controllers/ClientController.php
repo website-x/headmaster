@@ -31,7 +31,7 @@ class ClientController extends Controller
                 ->with(['office', 'createdBy'])
                 ->paginate();
         }
-
+        
         return Inertia::render('Clients/Index', [
             'clients' => $clients,
         ]);
@@ -95,7 +95,8 @@ class ClientController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Client $client)
-    {
+    {   
+
         return Inertia::render('Clients/Edit', [
             'client' => $client->load('payments'),
             'offices' => Office::get(['id', 'name'])->toArray(),
@@ -111,7 +112,12 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
+        
         Validator::make($request->all(), [
+            'first_name' => ['required', 'string'],
+            'last_name' => ['required', 'string'],
+            'father_first_name' => ['required', 'string'],
+            'father_last_name' => ['required', 'string'],
             'address' => ['required', 'string'],
             'city' => ['required', 'string'],
             'state' => ['required', 'string'],
@@ -129,6 +135,10 @@ class ClientController extends Controller
         }
 
         $client->update([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'father_first_name' => $request->father_first_name,
+            'father_last_name' => $request->father_last_name,
             'address' => $request->address,
             'city' => $request->city,
             'state' => $request->state,
@@ -149,7 +159,10 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        $client->delete();
+        if($client->payments->isEmpty()){
+            $client->delete();
+        }
+        
 
         return redirect()->route('clients.index');
     }

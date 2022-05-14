@@ -84,12 +84,17 @@ class FeesController extends Controller
 
     public function edit(Fees $fee)
     {
+        $canDelete = 0;
+        if(\Auth::user()->hasRole('admin')){
+            $canDelete = 1;
+        }
         return Inertia::render('Fees/Edit', [
             'fees' => $fee,
             'clients' => Client::get(['id', 'first_name', 'last_name'])->pluck('full_name', 'id')->toArray(),
             'offices' => Office::get(['id', 'name'])->toArray(),
             'descriptions' => Description::get()->toArray(),
             'methods' => PaymentMethod::get()->toArray(),
+            'canDelete' => $canDelete
         ]);
     }
 

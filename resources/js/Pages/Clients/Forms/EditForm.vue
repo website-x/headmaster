@@ -18,7 +18,7 @@
                         class="mt-1 block w-full disabled:opacity-75"
                         v-model="form.first_name"
                         autocomplete="first_name"
-                        disabled="disabled"
+                        :disabled="$page.user.role == 'employee' ? 'disabled' : ''"
                     />
                     <jet-input-error
                         :message="form.error('first_name')"
@@ -33,8 +33,8 @@
                         type="text"
                         class="mt-1 block w-full disabled:opacity-75"
                         v-model="form.last_name"
-                        autocomplete="last_name"
-                        disabled="disabled"
+                        autocomplete="last_name"     
+                        :disabled="$page.user.role == 'employee' ? 'disabled' : ''"                   
                     />
                     <jet-input-error
                         :message="form.error('last_name')"
@@ -52,8 +52,8 @@
                         type="text"
                         class="mt-1 block w-full disabled:opacity-75"
                         v-model="form.father_first_name"
-                        autocomplete="father_first_name"
-                        disabled="disabled"
+                        autocomplete="father_first_name"    
+                        :disabled="$page.user.role == 'employee' ? 'disabled' : ''"                    
                     />
                     <jet-input-error
                         :message="form.error('father_first_name')"
@@ -72,7 +72,7 @@
                         class="mt-1 block w-full disabled:opacity-75"
                         v-model="form.father_last_name"
                         autocomplete="father_last_name"
-                        disabled="disabled"
+                        :disabled="$page.user.role == 'employee' ? 'disabled' : ''"
                     />
                     <jet-input-error
                         :message="form.error('father_last_name')"
@@ -193,6 +193,7 @@
                 >
 
                 <button
+                    v-if="$page.user.role == 'admin'"
                     @click="confirmApiTokenDeletion"
                     class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150 bg-red-500 self-start"
                     :disabled="form.processing"
