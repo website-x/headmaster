@@ -111,6 +111,18 @@
 
                 <jet-input-error :message="form.error('method')" class="mt-2" />
             </div>
+
+            <div class="col-span-6 sm:col-span-4">
+                <jet-label for="notes" value="Notes" />
+                <textarea id="notes"
+                    type="text"
+                    class="form-input block w-full sm:text-sm sm:leading-5"
+                    v-model="form.notes"
+                    autocomplete="notes"
+                    placeholder="Notes"></textarea>
+
+                <jet-input-error :message="form.error('notes')" class="mt-2" />
+            </div>
         </template>
 
         <template #actions>
@@ -171,7 +183,8 @@ export default {
                     method: null,
                     method_remarks:null,
                     client_id: null,
-                    office_id: null
+                    office_id: null,
+                    notes: null
                 },
                 {
                     bag: "createFees",

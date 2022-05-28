@@ -135,6 +135,18 @@
                         class="mt-2"
                     />
                 </div>
+
+                <div class="col-span-6 sm:col-span-4">
+                    <jet-label for="notes" value="Notes" />
+                    <textarea id="notes"
+                    type="text"
+                    class="form-input block w-full sm:text-sm sm:leading-5"
+                    v-model="form.notes"
+                    autocomplete="notes"
+                    placeholder="Notes"></textarea>
+
+                    <jet-input-error :message="form.error('notes')" class="mt-2" />
+                </div>
             </template>
 
             <template #actions>
@@ -247,7 +259,8 @@ export default {
                     method: this.$page.fees.method,
                     method_remarks:this.$page.fees.method_remarks,
                     client_id: this.$page.fees.client_id,
-                    office_id: this.$page.fees.office_id
+                    office_id: this.$page.fees.office_id,
+                    notes: this.$page.fees.notes
                 },
                 {
                     bag: "updateFees",

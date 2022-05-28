@@ -26,14 +26,14 @@ class FeesController extends Controller
         $role_name = auth()->user()->role;
 
         if (strtolower($role_name) == 'admin') {
-            $fees_data = Fees::orderByDesc('created_at')->with(['client', 'collectedBy', 'office'])->paginate();
+            $fees_data = Fees::orderByDesc('created_at')->with(['client', 'collectedBy', 'office'])->paginate(20);
         } else {
             $fees_data = Fees::whereHas('office', function (Builder $query) use ($office_id) {
                 $query->where('office_id', $office_id);
             })
                 ->with(['client', 'collectedBy', 'office'])
                 ->orderBy('created_at', 'DESC')
-                ->paginate();
+                ->paginate(20);
         }
 
         return Inertia::render('Fees/Index', [
@@ -53,6 +53,7 @@ class FeesController extends Controller
 
     public function store(Request $request)
     {
+
         Validator::make($request->all(), [
             'amount' => 'required|numeric',
             'client_id' => 'required|numeric',
@@ -70,6 +71,7 @@ class FeesController extends Controller
             'client_id' => $request->client_id,
             'office_id' => auth()->user()->is_admin === true ? $request->office_id : auth()->user()->office->id,
             'user_id' => auth()->user()->id,
+            'notes'=>$request->get('notes')
         ]);
 
         try {
@@ -116,6 +118,7 @@ class FeesController extends Controller
             'client_id' => $request->client_id,
             'office_id' => auth()->user()->is_admin === true ? $request->office_id : auth()->user()->office->id,
             'user_id' => auth()->user()->id,
+            'notes'=>$request->get('notes')
         ]);
 
         return redirect()->route('fees.index');

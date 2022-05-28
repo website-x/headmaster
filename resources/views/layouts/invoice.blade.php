@@ -9,8 +9,8 @@
             max-width: 800px;
             margin: auto;
             padding: 30px;
-            border: 1px solid #eee;
-            box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+            /*border: 1px solid #eee;*/
+            /*box-shadow: 0 0 10px rgba(0, 0, 0, .15);*/
             font-size: 16px;
             line-height: 24px;
             font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
@@ -192,6 +192,7 @@
         <tr class="heading">
             <th>Sr No.</th>
             <th>Description</th>
+            <th>Notes</th>
             <th>Discount</th>
             <th>Penalty</th>
             <th>Amount</th>
@@ -207,6 +208,7 @@
                     <small>({{ $fees->method_remarks }})</small>
                 @endif
             </td>
+            <td>{{ $fees->notes ?? 'NA' }}</td>
             <td><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>0</td>
             <td><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>0</td>
             <td>
@@ -215,7 +217,7 @@
         </tr>
 
         <tr>
-            <td colspan="2" class="sb-highlighted">
+            <td colspan="3" class="sb-highlighted">
                 Total Amount in Word
             </td>
             <td></td>
@@ -225,7 +227,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="3">
+            <td colspan="4">
                 <span style="text-transform: uppercase">
                     {{ $fees->fees_amount_in_words }}
                 </span>
@@ -234,13 +236,13 @@
             <td><span>&#8377;</span>0</td>
         </tr>
         <tr>
-            <td colspan="3"></td>
+            <td colspan="4"></td>
             <td class="sb-highlighted"><span>Penalty</span></td>
             <td><span>&#8377;</span>0</td>
         </tr>
 
         <tr class="total">
-            <td colspan="3">
+            <td colspan="4">
                 <small>Collected By
                     <br>
                     {{ $fees->collectedBy->name }} ({{ $fees->office->name }})</small>
